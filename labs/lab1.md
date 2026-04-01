@@ -334,14 +334,6 @@ int main() {
 
 > Your answer:
 
-**Q9.** Binary search is significantly faster for large `n` in the worst case. But look at the best-case binary search time — it should be roughly constant across all `n`. And look at the best-case linear search time — it should also be roughly constant. What complexity class does each best case belong to?
-
-> Your answer:
-
-**Q10.** Your measured times probably don't scale *perfectly* according to the theoretical complexity. List at least two real-world factors that could cause the measured time to deviate from what the operation count alone would predict.
-
-> Your answer:
-
 ---
 
 ## Model 3: Memory Usage
@@ -455,23 +447,17 @@ int main() {
 
 ### Critical Thinking Questions — Model 3
 
-**Q11.** In Table 3a, what is the "bytes per element" value? Is it consistent across all values of `n`? What C++ data type is being stored, and does the number make sense?
+
+**Q9.** When `n` doubles, what happens to total heap memory? What complexity class describes the memory usage of storing an array of `n` integers?
 
 > Your answer:
 
-**Q12.** When `n` doubles, what happens to total heap memory? What complexity class describes the memory usage of storing an array of `n` integers?
+**Q10.** Look at Table 3b. The iterative version always uses 1 stack frame. The recursive version uses more. How does the number of recursive frames grow as `n` grows? Does this match O(log n)?
 
 > Your answer:
 
-**Q13.** Look at Table 3b. The iterative version always uses 1 stack frame. The recursive version uses more. How does the number of recursive frames grow as `n` grows? Does this match O(log n)?
 
-> Your answer:
-
-**Q14.** Stack frames are not free — each one stores local variables, the return address, and other overhead (typically 32–128 bytes depending on the function). For `n = 1,000,000`, estimate the extra memory consumed by the recursive call stack compared to the iterative version. Is this a practical concern?
-
-> Your answer:
-
-**Q15.** Both the iterative and recursive binary search are O(log n) in *time* complexity. But their *space* complexity is different. State the space complexity of each and explain why they differ.
+**Q11.** Both the iterative and recursive binary search are O(log n) in *time* complexity. But their *space* complexity is different. State the space complexity of each and explain why they differ.
 
 > Your answer:
 
@@ -602,66 +588,23 @@ int main() {
 
 ### Critical Thinking Questions — Model 4
 
-**Q16.** In Table 4b, when `n` doubles, what does the ratio column show? Is it close to 4? If it's not exactly 4, explain why an O(n²) algorithm might not scale by *exactly* 4× when `n` doubles.
+**Q12.** In Table 4a, the O(log n) search times are probably so small they appear as `0.000` ms. This doesn't mean the algorithm takes zero time — it means our millisecond timer isn't precise enough. What does this tell you about using wall-clock time for benchmarking very fast algorithms?
 
 > Your answer:
 
-**Q17.** In Table 4a, the O(log n) search times are probably so small they appear as `0.000` ms. This doesn't mean the algorithm takes zero time — it means our millisecond timer isn't precise enough. What does this tell you about using wall-clock time for benchmarking very fast algorithms?
+**Q13.** At `n = 8,000`, how much longer does the O(n²) sort take compared to the O(n) scan? Now imagine `n = 1,000,000`. Using the complexity ratios, estimate how much longer the O(n²) algorithm would take relative to O(n) at that scale. Show your reasoning.
 
 > Your answer:
 
-**Q18.** At `n = 8,000`, how much longer does the O(n²) sort take compared to the O(n) scan? Now imagine `n = 1,000,000`. Using the complexity ratios, estimate how much longer the O(n²) algorithm would take relative to O(n) at that scale. Show your reasoning.
+**Q14.** The O(n) scan uses `volatile` on the accumulator variable. Remove the `volatile` keyword, recompile with `-O2` instead of `-O0`, and run again. What happens to the O(n) scan time? Why? What does this reveal about the relationship between benchmarking and compiler optimizations?
 
 > Your answer:
 
-**Q19.** The O(n) scan uses `volatile` on the accumulator variable. Remove the `volatile` keyword, recompile with `-O2` instead of `-O0`, and run again. What happens to the O(n) scan time? Why? What does this reveal about the relationship between benchmarking and compiler optimizations?
-
-> Your answer:
-
-**Q20.** Suppose you are building an app that needs to sort a list of items every time a user opens it. The list is currently 1,000 items and your O(n²) sort takes 1 ms — fast enough. Your product grows and the list becomes 100,000 items. Using your observed scaling ratio, estimate the new sort time. Is it still acceptable? What would you do?
+**Q15.** Suppose you are building an app that needs to sort a list of items every time a user opens it. The list is currently 1,000 items and your O(n²) sort takes 1 ms — fast enough. Your product grows and the list becomes 100,000 items. Using your observed scaling ratio, estimate the new sort time. Is it still acceptable? What would you do?
 
 > Your answer:
 
 ---
-
-## Reflection (Individual — 5 min)
-
-Answer these on your own before the group debrief.
-
-**R1.** Before today, how did you think about whether an algorithm was "fast" or "slow"? Has your thinking changed? If so, how?
-
-> Your answer:
-
-**R2.** Which of the four programs surprised you most? What did you expect to see, and what did you actually see?
-
-> Your answer:
-
-**R3.** You observed three different views of efficiency today: operation counts, wall-clock time, and memory usage. Which one do you think is the most useful measure of an algorithm's efficiency? Is there a situation where you'd prefer one over the others?
-
-> Your answer:
-
----
-
-## Group Debrief Questions
-
-Discuss these as a group. The Presenter will share your group's answers with the class.
-
-**D1.** Every group got slightly different timing numbers from Program 2 and Program 4 — even though everyone ran the same code. Why? Does this mean the experiment was flawed?
-
-**D2.** Binary search requires a *sorted* array. Linear search does not. Given what you observed today, describe a situation where you would deliberately choose linear search over binary search.
-
-**D3.** The programs today used arrays — a simple, flat structure. If the data were stored in a different structure (say, a linked list), would binary search still work? Why or why not?
-
----
-
-## Summary
-
-| Algorithm | Best case | Worst case | Average case | Space (iterative) |
-|---|---|---|---|---|
-| Linear search | O(1) | O(n) | O(n) | O(1) |
-| Binary search (iterative) | O(1) | O(log n) | O(log n) | O(1) |
-| Binary search (recursive) | O(1) | O(log n) | O(log n) | O(log n) |
-| Selection sort | O(n²) | O(n²) | O(n²) | O(1) |
 
 **Key takeaways:**
 
