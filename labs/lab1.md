@@ -183,23 +183,23 @@ Run the program and fill in the table:
 
 **Q1.** Look at the **Lin Worst** column. Each time `n` grows by 10×, what happens to the number of comparisons? Write a formula relating Lin Worst to `n`.
 
-> Your answer:
+> Your answer: Every time 'n' grows by 10x, the number of comparisons also grows by n. The equation relating Line Worst to 'n' would be Line Worst = n. 
 
 **Q2.** Look at the **Bin Worst** column. Each time `n` grows by 10×, what happens? Is the growth the same as linear search? Describe the pattern in words.
 
-> Your answer:
+> Your answer: The growth is not the same as linear search. The pattern begins by incrementing by a value of 6. However, on the third iteration, it increase by 8, which reflects a logarithmic growth. 
 
 **Q3.** The **Bin Best** column should show `1` for all values of `n`. Why? What is the best-case scenario for binary search, and why does the array size not affect it?
 
-> Your answer:
+> Your answer: The best-case scenario for a binary search will always be 1. In this case, it highlights how when the algorithm calculates the midpoint, ,that it will find the needed index. 
 
 **Q4.** Compare **Lin Avg** to **Lin Worst**. What is the approximate ratio between them across all values of `n`? What does this tell you about where a typical search ends up?
 
-> Your answer:
+> Your answer: The ratio beween Line avg and Lin Worst is 2:1. The approximate ratio between all values of 'n' is n/2. This tells us that the Lin Avg ends up being half of n. 
 
 **Q5.** For `n = 100,000`, binary search makes far fewer comparisons than linear search in the worst case. But for `n = 10`, the difference is small. Does this mean binary search is *always* the right choice? What would make you prefer linear search?
 
-> Your answer:
+> Your answer: Depending on the circumstances, binary search is not always the right choice. Data must be sorted in binary, whereas they do not need to be sorted in a linear scan. For the extra time to implement the infrastructure for a binary scan, it isn't worth the extra overhead, compared to using it for larger data sets. 
 
 ---
 
