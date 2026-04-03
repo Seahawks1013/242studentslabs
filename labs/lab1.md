@@ -324,15 +324,15 @@ int main() {
 
 **Q6.** In Table 2a, when `n` grows from 1,000 to 10,000 (10×), approximately how much does linear search time increase? Does this match what you predicted from your answer to Q1?
 
-> Your answer:
+> Your answer: It increases by just over 10x. Yes, this is similar to what I predicted in Q1. 
 
 **Q7.** Look at the **Speedup** column in Table 2a. Does the speedup stay constant, grow, or shrink as `n` increases? Explain why, using the operation counts from Model 1 as evidence.
 
-> Your answer:
+> Your answer: The speed up grows as 'n' increases. For the linear algorithm, it ends up iterating through many more spaces within the array, whereas the binary search is able to keep a level of efficiency. While linear may work well for smaller arrays, the time it takes for the algorithm to be completed increases as 'n' increases as well. 
 
 **Q8.** In Table 2b (best case), what happens to linear search time as `n` grows? What about binary search? Why are these results so different from the worst case?
 
-> Your answer:
+> Your answer: In Table 2b, the linear search time stays at 0.01 μs, and the binary search slowly increases (starting from 0.07 μs). For linear search, this occurs because it defaults to the best scenario, which is at the first index. However, for binary search, the target is at the midpoint, and it takes the computer a bit more time to calculate the midpoint. 
 
 ---
 
@@ -450,16 +450,16 @@ int main() {
 
 **Q9.** When `n` doubles, what happens to total heap memory? What complexity class describes the memory usage of storing an array of `n` integers?
 
-> Your answer:
+> Your answer: When 'n' increases by 10x, the total heap memory increases by 10x as well. If 'n' were to double, then the heap memory would increase by 4,000. 
 
 **Q10.** Look at Table 3b. The iterative version always uses 1 stack frame. The recursive version uses more. How does the number of recursive frames grow as `n` grows? Does this match O(log n)?
 
-> Your answer:
+> Your answer: The number of recursive frames grows by either 3 or 4 frames. It is not constant, relative to the increase of 'n'. Therefore, it reflects logarithmic growth. 
 
 
 **Q11.** Both the iterative and recursive binary search are O(log n) in *time* complexity. But their *space* complexity is different. State the space complexity of each and explain why they differ.
 
-> Your answer:
+> Your answer: For Table 3a O(1), 
 
 ---
 
@@ -590,7 +590,7 @@ int main() {
 
 **Q12.** In Table 4a, the O(log n) search times are probably so small they appear as `0.000` ms. This doesn't mean the algorithm takes zero time — it means our millisecond timer isn't precise enough. What does this tell you about using wall-clock time for benchmarking very fast algorithms?
 
-> Your answer:
+> Your answer:  
 
 **Q13.** At `n = 8,000`, how much longer does the O(n²) sort take compared to the O(n) scan? Now imagine `n = 1,000,000`. Using the complexity ratios, estimate how much longer the O(n²) algorithm would take relative to O(n) at that scale. Show your reasoning.
 
