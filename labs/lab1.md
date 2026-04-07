@@ -459,7 +459,7 @@ int main() {
 
 **Q11.** Both the iterative and recursive binary search are O(log n) in *time* complexity. But their *space* complexity is different. State the space complexity of each and explain why they differ.
 
-> Your answer: For Table 3a O(1), 
+> Your answer: For Table 3a O(1), only one stack frame is needed due to the single loop being used for the iterative search. For table 3b, we see that the recursive call ads a new frame to the call stack, log n frames stacking on top of each other for the worst case. Therefore, both searches utilize o(log n) time complexity, but differ in space complexity. 
 
 ---
 
@@ -590,19 +590,19 @@ int main() {
 
 **Q12.** In Table 4a, the O(log n) search times are probably so small they appear as `0.000` ms. This doesn't mean the algorithm takes zero time — it means our millisecond timer isn't precise enough. What does this tell you about using wall-clock time for benchmarking very fast algorithms?
 
-> Your answer:  
+> Your answer: This tells us that the wall-clock time in milliseconds does not work precisely with fast algorithms. A solution would be to measure in nanoseconds, so benchmarks exute higher accuracy. 
 
 **Q13.** At `n = 8,000`, how much longer does the O(n²) sort take compared to the O(n) scan? Now imagine `n = 1,000,000`. Using the complexity ratios, estimate how much longer the O(n²) algorithm would take relative to O(n) at that scale. Show your reasoning.
 
-> Your answer:
+> Your answer: At n = 8,000, the  O(n²) sort takes 244.901 ms longer than the O(n) scan. The O(n²) scan takes 2,289.79439 times longer than the O(n) scan (245.008/0.107). n=1,000,000 is 125 times bigger than n=8,000; if we multiple those values together, we get 286,224.299. Therefore, the sort would be 286,224.299 tmeis slower at that scale. 
 
 **Q14.** The O(n) scan uses `volatile` on the accumulator variable. Remove the `volatile` keyword, recompile with `-O2` instead of `-O0`, and run again. What happens to the O(n) scan time? Why? What does this reveal about the relationship between benchmarking and compiler optimizations?
 
-> Your answer:
+> Your answer: After removing the volatile keyword and recompiling, all O(n) scan times returned "0.000". When incorporating 'volatile', it essentially tells the computer to do exactly what was written in the code. However, after changing the compilter to include -02, the compiler never ran the loop; this shows how benchmarking is inseperable from compiler behavior, as the copmiler decides on what to execute. 
 
 **Q15.** Suppose you are building an app that needs to sort a list of items every time a user opens it. The list is currently 1,000 items and your O(n²) sort takes 1 ms — fast enough. Your product grows and the list becomes 100,000 items. Using your observed scaling ratio, estimate the new sort time. Is it still acceptable? What would you do?
 
-> Your answer:
+> Your answer: The increase from 1,000 items to 100,000 items reflects 10,000 as the growrth factor. Therefore, when applied to sort time, it would take 10 seconds for the app to load. This is unacceptable and takes too long; I would switch to a faster algorithm such as O(n log n) sort. 
 
 ---
 
