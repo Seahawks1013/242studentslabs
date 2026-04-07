@@ -187,15 +187,15 @@ Run the program and fill in the table:
 
 **Q2.** Look at the **Bin Worst** column. Each time `n` grows by 10×, what happens? Is the growth the same as linear search? Describe the pattern in words.
 
-> Your answer: The growth is not the same as linear search. The pattern begins by incrementing by a value of 6. However, on the third iteration, it increase by 8, which reflects a logarithmic growth. 
+> Your answer: The growth is not the same as linear search. The pattern begins by incrementing by a value of 6. However, on the third iteration, it increased by 8, which reflects logarithmic growth. 
 
 **Q3.** The **Bin Best** column should show `1` for all values of `n`. Why? What is the best-case scenario for binary search, and why does the array size not affect it?
 
-> Your answer: The best-case scenario for a binary search will always be 1. In this case, it highlights how when the algorithm calculates the midpoint, ,that it will find the needed index. 
+> Your answer: The best-case scenario for a binary search will always be 1. In this case, it highlights how, when the algorithm calculates the midpoint, it will find the needed index. 
 
 **Q4.** Compare **Lin Avg** to **Lin Worst**. What is the approximate ratio between them across all values of `n`? What does this tell you about where a typical search ends up?
 
-> Your answer: The ratio beween Line avg and Lin Worst is 2:1. The approximate ratio between all values of 'n' is n/2. This tells us that the Lin Avg ends up being half of n. 
+> Your answer: The ratio between Line avg and Lin Worst is 2:1. The approximate ratio between all values of 'n' is n/2. This tells us that the Lin Avg ends up being half of n. 
 
 **Q5.** For `n = 100,000`, binary search makes far fewer comparisons than linear search in the worst case. But for `n = 10`, the difference is small. Does this mean binary search is *always* the right choice? What would make you prefer linear search?
 
@@ -328,7 +328,7 @@ int main() {
 
 **Q7.** Look at the **Speedup** column in Table 2a. Does the speedup stay constant, grow, or shrink as `n` increases? Explain why, using the operation counts from Model 1 as evidence.
 
-> Your answer: The speed up grows as 'n' increases. For the linear algorithm, it ends up iterating through many more spaces within the array, whereas the binary search is able to keep a level of efficiency. While linear may work well for smaller arrays, the time it takes for the algorithm to be completed increases as 'n' increases as well. 
+> Your answer: The speed up grows as 'n' increases. For the linear algorithm, it ends up iterating through many more spaces within the array, whereas the binary search can keep a level of efficiency. While linear may work well for smaller arrays, the time it takes for the algorithm to be completed increases as 'n' increases as well. 
 
 **Q8.** In Table 2b (best case), what happens to linear search time as `n` grows? What about binary search? Why are these results so different from the worst case?
 
@@ -459,7 +459,7 @@ int main() {
 
 **Q11.** Both the iterative and recursive binary search are O(log n) in *time* complexity. But their *space* complexity is different. State the space complexity of each and explain why they differ.
 
-> Your answer: For Table 3a O(1), only one stack frame is needed due to the single loop being used for the iterative search. For table 3b, we see that the recursive call ads a new frame to the call stack, log n frames stacking on top of each other for the worst case. Therefore, both searches utilize o(log n) time complexity, but differ in space complexity. 
+> Your answer: For Table 3a O(1), only one stack frame is needed due to the single loop being used for the iterative search. For Table 3b, we see that the recursive call adds a new frame to the call stack, log n frames stacking on top of each other for the worst case. Therefore, both searches utilize O(log n) time complexity, but differ in space complexity. 
 
 ---
 
@@ -590,19 +590,19 @@ int main() {
 
 **Q12.** In Table 4a, the O(log n) search times are probably so small they appear as `0.000` ms. This doesn't mean the algorithm takes zero time — it means our millisecond timer isn't precise enough. What does this tell you about using wall-clock time for benchmarking very fast algorithms?
 
-> Your answer: This tells us that the wall-clock time in milliseconds does not work precisely with fast algorithms. A solution would be to measure in nanoseconds, so benchmarks exute higher accuracy. 
+> Your answer: This tells us that the wall-clock time in milliseconds does not work precisely with fast algorithms. A solution would be to measure in nanoseconds, so benchmarks exhibit higher accuracy. 
 
 **Q13.** At `n = 8,000`, how much longer does the O(n²) sort take compared to the O(n) scan? Now imagine `n = 1,000,000`. Using the complexity ratios, estimate how much longer the O(n²) algorithm would take relative to O(n) at that scale. Show your reasoning.
 
-> Your answer: At n = 8,000, the  O(n²) sort takes 244.901 ms longer than the O(n) scan. The O(n²) scan takes 2,289.79439 times longer than the O(n) scan (245.008/0.107). n=1,000,000 is 125 times bigger than n=8,000; if we multiple those values together, we get 286,224.299. Therefore, the sort would be 286,224.299 tmeis slower at that scale. 
+> Your answer: At n = 8,000, the O(n²) sort takes 244.901 ms longer than the O(n) scan. The O(n²) scan takes 2,289.79439 times longer than the O(n) scan (245.008/0.107). n=1,000,000 is 125 times bigger than n=8,000. If we multiply those values together, we get 286,224.299. Therefore, the sort would be 286,224.299 times slower at that scale. 
 
 **Q14.** The O(n) scan uses `volatile` on the accumulator variable. Remove the `volatile` keyword, recompile with `-O2` instead of `-O0`, and run again. What happens to the O(n) scan time? Why? What does this reveal about the relationship between benchmarking and compiler optimizations?
 
-> Your answer: After removing the volatile keyword and recompiling, all O(n) scan times returned "0.000". When incorporating 'volatile', it essentially tells the computer to do exactly what was written in the code. However, after changing the compilter to include -02, the compiler never ran the loop; this shows how benchmarking is inseperable from compiler behavior, as the copmiler decides on what to execute. 
+> Your answer: After removing the volatile keyword and recompiling, all O(n) scan times returned "0.000". When incorporating 'volatile', it essentially tells the computer to do exactly what was written in the code. However, after changing the compiler to include -02, the compiler never ran the loop. This shows how benchmarking is inseparable from compiler behavior, as the compiler decides on what to execute. 
 
-**Q15.** Suppose you are building an app that needs to sort a list of items every time a user opens it. The list is currently 1,000 items and your O(n²) sort takes 1 ms — fast enough. Your product grows and the list becomes 100,000 items. Using your observed scaling ratio, estimate the new sort time. Is it still acceptable? What would you do?
+**Q15.** Suppose you are building an app that needs to sort a list of items every time a user opens it. The list is currently 1,000 items, and your O(n²) sort takes 1 ms — fast enough. Your product grows, and the list becomes 100,000 items. Using your observed scaling ratio, estimate the new sort time. Is it still acceptable? What would you do?
 
-> Your answer: The increase from 1,000 items to 100,000 items reflects 10,000 as the growrth factor. Therefore, when applied to sort time, it would take 10 seconds for the app to load. This is unacceptable and takes too long; I would switch to a faster algorithm such as O(n log n) sort. 
+> Your answer: The increase from 1,000 items to 100,000 items reflects 10,000 as the growrth factor. Therefore, when applied to sort time, it would take 10 seconds for the app to load. This is unacceptable and takes too long; I would switch to a faster algorithm, such as O(n log n) sort. 
 
 ---
 
