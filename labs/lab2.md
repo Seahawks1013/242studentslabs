@@ -207,19 +207,20 @@ Record the program output:
 
 **Q1.** Compare **Merge** and **Quick** to the **n·log₂(n)** column. Are they above or below it? By roughly what factor? What does this tell you about the constant hidden inside O(n log n)?
 
-> Your answer:
+> Your answer: After taking a look at the Merge Column, it begins with an output of 539 when N = 100; it is always lower than the n·log₂(n) column for each of the instances of n. For the Quick column, it is actually higher each time. While they all belong in the same nlogn family, they are not identical due to the ‘invisible constants’. Overall, this highlights the efficiency of Merge Sort, and how the constants hidden within the O( n log n) algorithm impact efficiency. 
 
 **Q2.** When n doubles from 1,000 to 2,000, what happens to the Selection sort comparison count? What happens to the Merge sort count? Do these ratios match what you would predict from O(n²) and O(n log n)?
 
-> Your answer:
+> Your answer:  When n doubles from 1,000 to 2,000, the selection sort comparison grows at a ratio of about 4.0, with the merge sort count increasing at a ratio of about 2.2. Yes, these ratios match what I would predict from these algorithms. When a number is doubled in a quadratic equation, the total output doubles by 4 times, which checks out in this scenario. For the log selection sort comparison, it will typically double, and it does so, but at a slightly higher value above 2 times.
 
 **Q3.** The Insertion sort comparison count on random data should be roughly between n and n(n-1)/2. Where does it actually land? What does this suggest about its average-case behavior?
 
-> Your answer:
+> Your answer: If we take a look at n = 5,000, the Insertion value is 6241995, and the n(n-1)/2 value is 12497500. When divided, it lands about halfway, at 0.5 ( 6241995/12497500). Since the number is half, this suggests that insertion search only needs to search through half of the list to find the right spot for a new piece of data ( average-case behavior). 
+
 
 **Q4.** Quick sort's comparison count on random data is likely close to — or sometimes less than — merge sort's. Both are O(n log n). Given that quicksort has an O(n²) worst case, why might it make *fewer* comparisons than merge sort on average?
 
-> Your answer:
+> Your answer: Through merge sort, it must first sort the data, and then compare different values from the different sections to then rearrange the data. However, for quick sort, it makes fewer steps within the partition stage. It also makes fewer comparisons on average because it is able to pivot and eliminate comparisons more aggressively. As mentioned in the question, quicksort has an O(n²) worst case, whereas merge sort will never reach that worst case. 
 
 ---
 
