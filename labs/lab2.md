@@ -332,9 +332,9 @@ int main() {
 
 | Input type | Selection | Insertion | Merge | Quick |
 |---|---|---|---|---|
-| Random | | | | |
-| Already sorted | | | | |
-| Reverse sorted | | | | |
+| Random | 499500 | 254916 | 8698 | 10556 |
+| Already sorted | 499500 | 999 | 5044 | 499500 |
+| Reverse sorted | 499500 | 499500 | 4932 | 499500 |
 
 ---
 
