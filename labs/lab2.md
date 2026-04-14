@@ -525,18 +525,18 @@ int main() {
 
 | n | Sel (ms) | Sel mem | Ins (ms) | Ins mem | Merge (ms) | Merge mem | Quick (ms) | Quick mem |
 |---|---|---|---|---|---|---|---|---|
-| 1,000 | | | | | | | | |
-| 5,000 | | | | | | | | |
-| 10,000 | | | | | | | | |
+| 1,000 | 3.56 | 4000 | 2.46 | 4000 | 1.21 | 81540 | 0.22 | 4000 |
+| 5,000 | 87.06 | 20000 | 59.29 | 20000 | 7.02 | 778756 | 1.41 | 20000 |
+| 10,000 | 345.41 | 40000 | 240.19 | 40000| 14.59 | 1688580 | 3.20 | 40000 |
 
 ### Observation Table 3b — Stability
 
 | Algorithm | Stable? |
 |---|---|
-| Selection sort | |
-| Insertion sort | |
-| Merge sort | |
-| Quicksort | |
+| Selection sort | YES |
+| Insertion sort | YES |
+| Merge sort | YES |
+| Quicksort | NO |
 
 ---
 
