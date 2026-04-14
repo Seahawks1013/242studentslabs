@@ -207,7 +207,7 @@ Record the program output:
 
 **Q1.** Compare **Merge** and **Quick** to the **n·log₂(n)** column. Are they above or below it? By roughly what factor? What does this tell you about the constant hidden inside O(n log n)?
 
-> Your answer: After taking a look at the Merge Column, it begins with an output of 539 when N = 100; it is always lower than the n·log₂(n) column for each of the instances of n. For the Quick column, it is actually higher each time. While they all belong in the same nlogn family, they are not identical due to the ‘invisible constants’. Overall, this highlights the efficiency of Merge Sort, and how the constants hidden within the O( n log n) algorithm impact efficiency. 
+> Your answer: Merge sort is consistently below quick and n·log₂(n). Quick is above merge, but slightly above n·log₂(n). Merge sort's hidden constant is less than 1, while quicksort's is slightly above 1. Both belong to the same O(n log n) family, which highlights how algorithms from the same family operate differently. The hidden constant is the difference between theoretical complexity and real-world performance. 
 
 **Q2.** When n doubles from 1,000 to 2,000, what happens to the Selection sort comparison count? What happens to the Merge sort count? Do these ratios match what you would predict from O(n²) and O(n log n)?
 
@@ -220,7 +220,8 @@ Record the program output:
 
 **Q4.** Quick sort's comparison count on random data is likely close to — or sometimes less than — merge sort's. Both are O(n log n). Given that quicksort has an O(n²) worst case, why might it make *fewer* comparisons than merge sort on average?
 
-> Your answer: Through merge sort, it must first sort the data, and then compare different values from the different sections to then rearrange the data. However, for quick sort, it makes fewer steps within the partition stage. It also makes fewer comparisons on average because it is able to pivot and eliminate comparisons more aggressively. As mentioned in the question, quicksort has an O(n²) worst case, whereas merge sort will never reach that worst case. 
+> Your answer: Through merge sort, it must first sort the data, and then compare different values from the different sections to then rearrange the data. However, for quick sort, it makes fewer steps within the partition stage. It also makes fewer comparisons on average because it can pivot and eliminate comparisons more aggressively. As mentioned in the question, quicksort has an O(n²) worst case, whereas merge sort will never reach that worst case. 
+
 
 ---
 
@@ -342,23 +343,25 @@ int main() {
 
 **Q5.** Look at the **Selection** column across all three input types. Does the comparison count change? Why or why not? What does this tell you about selection sort's relationship to input shape?
 
-> Your answer:
+> Your answer: Across all three input types, the comparison count for the selection column does not change; it stays at 499500. Since selection sort has no mechanism to detect existing work, it scans every single possible pair. Therefore, it is input-oblivious. 
 
 **Q6.** Look at the **Insertion** column. Already-sorted input should give a dramatically lower count than random or reverse-sorted. By approximately what factor does it drop? What is happening inside the algorithm that explains this?
 
-> Your answer:
+> Your answer: The insertion column begins with 254,916 on a random input, and then drops to 999 on already sorted, and later increases to 499500 on reverse sorted. The drop to 999 is about a 250x reduction. This occurs because of the while loop, which asks and checks if the input to the left belongs.
 
 **Q7.** Look at the **Merge** column. Does it change meaningfully across input types? What property of merge sort explains this consistency?
 
-> Your answer:
+> Your answer: Merge does not change meaningfully across input types. It is extremely consistent. The reason this happens is that merge sort will always split the array exactly in half, recurse those halves, and then put them back together. It doesn’t have a separate worst-case runtime. (n log n) behavior is guaranteed each time, even when one side may finish earlier. 
 
 **Q8.** Look at the **Quick** column on already-sorted input. It is likely much higher than on random input. Explain why — trace what happens when the last element is chosen as pivot and the array is already sorted.
 
-> Your answer:
+> Your answer: When the last element on the input is chosen, it doesn’t allocate half of the array to be sorted on a faster scale (unbalanced partitions). When the last element is chosen as pivot, it slows down to On^2 behavior, since it has to iterate through each value one by one. The total comparisons end by becoming (n-1) + (n-2) +... and so forth. 
+
 
 **Q9.** Based on this table, which algorithm would you choose for a dataset you *know* is almost always already sorted (e.g., a log file that is mostly in time order with a few late arrivals)? Which would you avoid? Justify your choices.
 
-> Your answer:
+> Your answer: I would use Insertion sort. If the array is already sorted, it would only have to make 999 comparisons for 1,000 items. This algorithm is specifically optimized for nearly sorted data, as it operates in comparisons close to O(n). I would heavily avoid quicksort. For this implementation, quick sort would his its worst-case scenario on the already sorted data. 
+
 
 ---
 
@@ -544,23 +547,25 @@ int main() {
 
 **Q10.** Look at the **Sel mem** and **Ins mem** and **Quick mem** columns. They should be near zero (just the overhead of passing the vector by value). The **Merge mem** column should show values proportional to n. Approximately how many bytes does merge sort allocate per element? Does this match the O(n) space complexity?
 
-> Your answer:
+> Your answer: Looking at the Merge mem column (81,540 bytes) for n=1,000, 778,756 for n=5,000, and 1,688,580 for n=10,000. When dividing by n, we get 81 - 168 bytes per element, which is higher than the raw 4 bytes per integer. I believe this comes from vector<int> tmp, where memory scales linearly with n. This confirms the O(n) space complexity. 
 
 **Q11.** When n grows from 1,000 to 10,000 (10×), how does selection sort's runtime change? How does merge sort's runtime change? Do these match the predicted scaling from O(n²) and O(n log n)?
 
-> Your answer:
+> Your answer: As n increases, selection sort grows from 3.56 ms to 345.41 ms. The runtime grows by about 97 times from n=1000 to n=10000 (confirms the O(n²) relationship). Over the same range, merge sort goes from 1.21 ms to 14.59 ms, growing about 12 times. This shows the impacts of different time complexities and how the scaling between O(n²) and O(n log n) affects runtime. 
+
 
 **Q12.** At n = 10,000, which algorithm is fastest on random data? Which is slowest? Is the fastest algorithm the one with the best Big-O, or are there other factors at play?
 
-> Your answer:
+> Your answer: At n=10,000, quicksort is the fastest at 3.20 ms. Selection sort is the slowest, clocking a time of 345.41ms. While quicksort doesn’t have the fastest Big-O time complexity, it wins in this comparison due to its lack of allocated additional memory. For quick sort, it has a nlogn time complexity on paper. Big-O describes the growth rate, not necessarily the speed of the completion of the algorithm. 
+
 
 **Q13.** You are building a leaderboard that sorts players by score. When two players have the same score, they should remain in the order they originally achieved it (i.e., first-to-reach-score is ranked higher). Based on the stability results, which sorting algorithms are safe to use? Which are not?
 
-> Your answer:
+> Your answer: For this type of leaderboard, it would be wise to use insertion sort or merge sort. Both of them are stable, meaning that if there are two players who have an equal score, their order will remain the same. It is vital for the player who achieved the score first to stay on top. Based on the sorting algorithms' stability results, it would not be a good idea to use quicksort, since partitioning swaps could ruin this plate order. While Selection sort shows ‘yes’ on the table, it is technically unstable in theory. 
 
 **Q14.** Merge sort uses O(n) extra memory. On a machine with 8 GB of RAM, sorting a dataset of 1 billion integers (each 4 bytes = 4 GB of data), merge sort would need approximately how much *additional* memory? Is this a concern?
 
-> Your answer:
+> Your answer: With 1 billion integers, merge sort makes a copy of that data set, and temporarily holds the original dataset before deleting it (an additional 4GB on top of the 4GB dataset=8GB). While there would be 8 GB of memory being used for the program, you must account for other applications and OS operations occurring in the background. This would result in the computer crashing, which is a concern. The solution would be to use a memory-efficient alternative such as heapsort. 
 
 ---
 
@@ -663,25 +668,27 @@ Run the program and study the merge sort trace output. Answer the questions belo
 
 **Q15.** How many levels of indentation does the merge sort trace show for n = 7? What does each level of indentation correspond to in terms of the recursion? How does the number of levels relate to log₂(7)?
 
-> Your answer:
+> Your answer: There are three levels of indentation. Consisting of 0,2, and 4 spaces deep. Each level of indentation corresponds to a level of the recursion. log₂(7) relates to the levels because it is basically asking, “how many times do I need to split 7 in half to reach 1?” This helps explain speed, highlighting how merge sort deals with 3 levels of splitting in this context. 
+
 
 **Q16.** At the deepest level of indentation, each `base` line shows a single element. After the two `base` lines for the same parent, a `merge` line appears. What is always true about the output of a `merge` step — regardless of what the input subarrays looked like?
 
-> Your answer:
+> Your answer: Regardless of what the input subarrays look like, every merge step will produce a sorted subarray. It is a guaranteed process. This occurs because at each merge step, it goes down to a sorted order each time. 
 
 **Q17.** Count the total number of `merge` operations printed. For n = 7, there should be 6. For n elements in general, how many merge operations does merge sort perform? Express this as a function of n.
 
-> Your answer:
+> Your answer: For n elements, it performs exactly (n-1) of n. This occurs because each merge combines two subarrays into one. So if you have 8 items, there would be 7 total merges that occur in stages. 
 
 ### Observation: Quicksort Trace — Random vs. Sorted Input
 
 **Q18.** In the random-input quicksort trace, look at the partition steps. Does the pivot tend to split the array into roughly equal halves, or very unequal ones? Now look at the sorted-input trace. What do you observe about the split sizes? How many total partition steps appear in each trace?
 
-> Your answer:
+> Your answer: On Pivot=10, the splits are ‘left: [3,9] right: [38,27,82,43]’. Later, on pivot 43, the split is ‘left: [38,27] right: [82]’. There is a total of 4 partition steps, with not perfect halves. On the sorted input, there is a total of 6 partitions. All of the partitions are unbalanced, with the right array being left empty. 
+
 
 **Q19.** In the sorted-input quicksort trace, each partition step's "left" side is empty `[]` and the "right" side has all remaining elements. If this happens at every level on an array of n = 1,000 elements, how many total partition steps would there be? What complexity class is this?
 
-> Your answer:
+> Your answer: If the pivot landed there, each time it iterates through an element, it would compare that value to the other 999 values in the array. This would give 999 partition steps, and the partition would move from O(n) to O(n²). This would be equivalent to 499,500 comparisons. 
 
 ---
 
@@ -689,7 +696,7 @@ Run the program and study the merge sort trace output. Answer the questions belo
 
 **A1.** Radix sort was not in today's programs — it sorts without making element-to-element comparisons at all. Given that all four algorithms we studied today are comparison-based, what fundamental limit do they all share? (Hint: think about what O(n log n) represents for comparison-based sorting.)
 
----
+All four algorithms share a theoretical speed limit known as O(n log n). Since they are operating at O(n log n), they theoretically cannot go faster. When comparing two items at a time, this could take a while if there are a million items. However, with radix sort, it has additional digit-based bucketing that allows it to be faster in these situations. 
 
 ## Summary
 
