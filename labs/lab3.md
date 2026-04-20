@@ -165,13 +165,13 @@ Run the program and record the list contents printed after each labeled step:
 
 | Step | List contents (data values in order) |
 |---|---|
-| Initial | |
-| After insert 30 at front | |
-| After insert 10 at front | |
-| After insert 20 after 10 | |
-| After insert 40 after 30 | |
-| After removing 20 (after head) | |
-| After removing head (10) | |
+| Initial | null |
+| After insert 30 at front | [30@0x5f75f64dc2c0] → null |
+| After insert 10 at front | [10@0x5f75f64dc310][30@0x5f75f64dc2c0] → null |
+| After insert 20 after 10 | [10@0x5f75f64dc310][20@0x5f75f64dc330][30@0x5f75f64dc2c0] → null |
+| After insert 40 after 30 | [10@0x5f75f64dc310][20@0x5f75f64dc330][30@0x5f75f64dc2c0][40@0x5f75f64dc350] → null |
+| After removing 20 (after head) | [10@0x5f75f64dc310][30@0x5f75f64dc2c0][40@0x5f75f64dc350] → null |
+| After removing head (10) | [30@0x5f75f64dc2c0][40@0x5f75f64dc350] → null |
 
 ---
 
