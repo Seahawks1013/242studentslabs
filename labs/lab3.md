@@ -375,7 +375,7 @@ int main() {
 
 **Q4.** In Table 2c, the vector access time should be nearly the same for all values of n. The linked list access time grows with n. At n = 100,000, accessing the middle element, roughly how many times slower is the linked list than the vector? What does this tell you about why `std::vector` is preferred for random-access workloads?
 
-> Your answer: When at n=100,000, the Linked List takes about 155,814 ns, whereas the Vector takes ~5.22ns. The Linked List is approximately 29,850x slower. `std::vector` is preferred for random-access workloads since it calculates the address through a simple offset, providing random access. While the linked list has to walk the chain element-by-element, the vector can frequently look up under any circumstance. 
+> Your answer: When at n=100,000, the Linked List takes about 155,814 ns, whereas the Vector takes ~5.22ns. The Linked List is approximately 29,850x slower. `std::vector` is preferred for random-access workloads since it calculates the address through a simple offset, providing random access. While the linked list has to walk the chain element by element, the vector can frequently look up an element under any circumstance. 
 
 **Q5.** The linked list in Table 2b is slow because it has no tail pointer — it walks the whole list on every back-insertion. If you added a `tail` pointer (as in `std::list`), back insertion would be O(1). Would that make the linked list competitive with `vector::push_back` for building a list from scratch? What other factor still disadvantages the linked list?
 
@@ -517,9 +517,9 @@ Record the first 8 node addresses and their gaps from the program output:
 
 | n | Vector sum (μs) | Linked list sum (μs) | Slowdown |
 |---|---|---|---|
-| 1,000 | | | |
-| 5,000 | | | |
-| 10,000 | | | |
+| 1,000 | 1836.76 | 2682.68 | 1.5x |
+| 5,000 | 5403.34 | 20337.19 | 3.8x |
+| 10,000 | 10631.06 | 90385.47 | 8.5x |
 
 ### Observation Table 3c — Node Sizes
 
@@ -542,15 +542,15 @@ Record the first 8 node addresses and their gaps from the program output:
 
 **Q8.** In Table 3b, both the vector and the linked list perform the same total number of additions (n additions). Yet the linked list is significantly slower. The work is identical — why is the time different? What is the CPU doing between each addition in the linked list case that it doesn't have to do for the vector?
 
-> Your answer:
+> Your answer: Due to the shuffle function, there is a high probability that the nodes were scattered in memory. Instead of pulling the data from the L1/L2 cache, the CPU has to stall to pull the information from the main RAM, which is much slower. Within the linked list, the CPU cannot calculate where the next number is. Therefore, it must retrieve the next pointer from the current note, wait for the new address to be sent, and go to the new address to find the data. Within a vector, this process occurs much faster. 
 
 **Q9.** Look at Table 3c. A doubly-linked node stores one extra pointer compared to a singly-linked node. How many extra bytes does that add per node? For 10,000 nodes, how many extra bytes total does that cost? Is this a meaningful difference in practice?
 
 > Your answer: THIS QUESTION IS SKIPPED
 
-**Q10.** The traversal slowdown in Table 3b is consistently larger than 1× — linked list traversal is slower than vector traversal even though both do O(n) work with the same loop structure. As n grows from 1,000 to 10,000, does the slowdown factor stay roughly constant, grow, or shrink? What does the trend suggest about how cache effects scale with list size?
+**Q10.** The traversal slowdown in Table 3b is consistently larger than 1× — linked list traversal is slower than vector traversal, even though both do O(n) work with the same loop structure. As n grows from 1,000 to 10,000, does the slowdown factor stay roughly constant, grow, or shrink? What does the trend suggest about how cache effects scale with list size?
 
-> Your answer:
+> Your answer: As n grows from 1,000 to 10,000, the slowdown factor grows significantly from 1.5x to 8.5x. This suggests that as n increases, the impact of cache effects becomes more severe. When n = 1000, this operation may partially fit within the CPU's larger cache. It will not slow down as much. However, as n increases, the CPU is forced to go to the main RAM, which causes slowdowns. This is evident when I ran the programs, since the higher n operations took significantly longer than the lower n value operations. 
 
 ----
 
