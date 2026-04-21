@@ -179,7 +179,7 @@ Run the program and record the list contents printed after each labeled step:
 
 **Q1.** Every `new Node(val)` call allocates memory on the heap. Every `delete` call frees it. What would happen to a program that builds a large linked list, removes all nodes using `removeAfter`, but forgets to call `delete` on the removed nodes?
 
-> Your answer:
+> Your answer: If the nodes were removed but forgot to call 'delete', a memory leak would occur. Since the node would be unhooked and not accessible, the memory would remain on the heap since the operating system thinks the program is using it. When using a long-running program, all of the available RAM would be consumed, causing the program to crash. 
 
 ---
 
