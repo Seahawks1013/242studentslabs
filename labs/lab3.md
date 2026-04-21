@@ -367,23 +367,23 @@ int main() {
 
 **Q2.** In Table 2a, how does linked list `pushFront` time change as n grows from 1,000 to 100,000 (100×)? How does vector `insert(begin)` time change? Which operation's growth rate matches O(1) and which matches O(n)?
 
-> Your answer:
+> Your answer: As n grows from 1,000 to 100,000, the pushfront time increases from 78 μs to 3,461 μs, which is about a 44x increase. While there is noise within the data, the growth is relatively linear. Since the actual insertion only changes two pointers regardless of list size, PushFront reflects O(1) complexity. Vector 'insert(begin) frows from 77 μs to 97348 μs, which is over a 1,200 increase. Since each insertion shifts the existing elements to the right, this matches O(n) complexity. 
 
 **Q3.** In Table 2b, the linked list version walks to the end of the list before each insertion, making it O(n²) total. When n grows from 1,000 to 10,000 (10×), by approximately what factor does the linked list time increase? Does this match O(n²)?
 
-> Your answer:
+> Your answer: As n grows from 1,000 to 10,000, the time increases from 1,632 μs to 203,082 μs. This is an increase of approximately 124.4x. This matches, because if we calculate 10^2, the answer is 100. By including some overhead for memory allocation, the 124x increase is similar to 100, therefore aligning with the O(n²) behavior. 
 
-**Q4.** In Table 2c, the vector access time should be nearly the same for all values of n. The linked list access time grows with n. At n = 100,000 accessing the middle element, roughly how many times slower is the linked list than the vector? What does this tell you about why `std::vector` is preferred for random-access workloads?
+**Q4.** In Table 2c, the vector access time should be nearly the same for all values of n. The linked list access time grows with n. At n = 100,000, accessing the middle element, roughly how many times slower is the linked list than the vector? What does this tell you about why `std::vector` is preferred for random-access workloads?
 
-> Your answer:
+> Your answer: When at n=100,000, the Linked List takes about 155,814 ns, whereas the Vector takes ~5.22ns. The Linked List is approximately 29,850x slower. `std::vector` is preferred for random-access workloads since it calculates the address through a simple offset, providing random access. While the linked list has to walk the chain element-by-element, the vector can frequently look up under any circumstance. 
 
 **Q5.** The linked list in Table 2b is slow because it has no tail pointer — it walks the whole list on every back-insertion. If you added a `tail` pointer (as in `std::list`), back insertion would be O(1). Would that make the linked list competitive with `vector::push_back` for building a list from scratch? What other factor still disadvantages the linked list?
 
-> Your answer:
+> Your answer: If a tail pointer were added, it would be more competitive with push_back (mathematically). While a single operation may be slow, the average time per operation over long elements would be fast. However, there could be issues with the cache. For example, when a node is separately allocated on the heap, the nodes could be separated across different places in memory, resulting in cache misses (as a result of slow RAM trying to deliver data). 
 
 **Q6.** Based on Tables 2a, 2b, and 2c together, describe a real application or data structure where a linked list would be clearly the better choice over a vector, and justify your answer using the specific operation costs you observed.
 
-> Your answer:
+> Your answer: I think a linked list is a better choice over a vector when used for a priority queue, or when needing to interact with the head of the list. From Table 2a, we see that PushFront is much faster at high n than vector insertion due to not needing to shift data. When using a stack, the program may need to push and pop frequently, or perform insertionsdeletions in the middle. If a pointer is already linked to that location, the linked list can avoid the O(n) shuffling that vectors suffer from. 
 
 ---
 
@@ -538,7 +538,7 @@ Record the first 8 node addresses and their gaps from the program output:
 
 **Q7.** Look at the address gaps in Table 3a. Are the nodes contiguous (gap ≈ `sizeof(Node)`)? Or are they spread out? What does this tell you about how `new` allocates memory and why linked lists are "pointer-chasing" structures?
 
-> Your answer:
+> Your answer: THIS QUESTION IS SKIPPED
 
 **Q8.** In Table 3b, both the vector and the linked list perform the same total number of additions (n additions). Yet the linked list is significantly slower. The work is identical — why is the time different? What is the CPU doing between each addition in the linked list case that it doesn't have to do for the vector?
 
@@ -546,7 +546,7 @@ Record the first 8 node addresses and their gaps from the program output:
 
 **Q9.** Look at Table 3c. A doubly-linked node stores one extra pointer compared to a singly-linked node. How many extra bytes does that add per node? For 10,000 nodes, how many extra bytes total does that cost? Is this a meaningful difference in practice?
 
-> Your answer:
+> Your answer: THIS QUESTION IS SKIPPED
 
 **Q10.** The traversal slowdown in Table 3b is consistently larger than 1× — linked list traversal is slower than vector traversal even though both do O(n) work with the same loop structure. As n grows from 1,000 to 10,000, does the slowdown factor stay roughly constant, grow, or shrink? What does the trend suggest about how cache effects scale with list size?
 
