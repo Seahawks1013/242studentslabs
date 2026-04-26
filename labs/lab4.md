@@ -146,16 +146,16 @@ Fill in both columns after running the program. Record the contents from top to 
 | Operation | Linked stack (top → bottom) | Array stack (top → bottom) |
 |---|---|---|
 | Initial | *(empty)* | *(empty)* |
-| push(10) | | |
-| push(20) | | |
-| push(30) | | |
-| peek | | |
-| pop | | |
-| push(40) | | |
-| push(50) | | |
-| pop | | |
-| pop | | |
-| pop | | |
+| push(10) | [top→] 10 (size=1) | [top→] 10 (size=1) |
+| push(20) | [top→] 20 10 (size=2) | [top→] 20 10 (size=2) |
+| push(30) | [top→] 30 20 10 (size=3) | [top→] 30 20 10 (size=3) |
+| peek | [top→] 30 20 10 (size=3) | [top→] 30 20 10 (size=3) |
+| pop | [top→] 20 10 (size=2) | [top→] 20 10 (size=2) |
+| push(40) | [top→] 40 20 10 (size=3) | [top→] 40 20 10 (size=3) |
+| push(50) | [top→] 50 40 20 10 (size=4) | [top→] 50 40 20 10 (size=4) |
+| pop | [top→] 40 20 10 (size=3) | [top→] 40 20 10 (size=3) |
+| pop | [top→] 20 10 (size=2) | [top→] 20 10 (size=2) |
+| pop | [top→] 10 (size=1) | [top→] 10 (size=1) |
 
 ---
 
@@ -163,19 +163,19 @@ Fill in both columns after running the program. Record the contents from top to 
 
 **Q1.** After every operation, the linked stack and array stack print the same contents in the same order. They are implemented completely differently internally. What does this tell you about the relationship between an ADT and its implementation?
 
-> Your answer:
+> Your answer: This tells me that the implementation doesn't impact the front-end result. For example, when engineering a vending machine, there could be three separate machines that have different internals, but still give the user food at the points they selected. The same applies in this scenario. 
 
 **Q2.** The linked stack prints from `head` forward. The array stack prints from `top` downward (index `top` to 0). Both show elements in top-to-bottom order. What does the array `top` index physically represent — and how does it change on push versus pop?
 
-> Your answer:
+> Your answer: Top represents the slot that holds the position of the topmost element. On an empty stack, it starts out as -1. When push is initiated, top is incremented, then the new values are written to data[top]. On pop, the value is read and returned, and then top is decremented. This clears the slot and ensures that value is not part of the active slack. Data isn't erased, rather 
 
 **Q3.** The program does `push(10), push(20), push(30), pop, push(40), push(50), pop, pop, pop`. Before running the program, predict the return value of each `pop` in order. Check your prediction against the output.
 
-> Your prediction (three values, in order):
+> Your prediction (three values, in order): I predict that the return value of each pop will be 30,50,40,20. After checking my predictions, I was correct. 
 
 **Q4.** The array stack has a compile-time capacity of 16. The linked stack has no capacity limit. If you pushed 17 items onto the array stack what would happen? What would happen to the linked stack? What is the practical consequence of choosing each implementation for an application where maximum stack depth is unknown?
 
-> Your answer:
+> Your answer: If 17 items were on an array stack, the program would crash, and a "full" notification would appear (due to overflow_error line). Since it is 16 slots wide, there is not way around it. To a linked stack, it would just allocate a new node for the 17th value, and it would continue this process until the machine runs out of RAM. If you don't know how big a stack size will get, it could waste memory and crash. However, when the size is not known (or fixed), then it is safer to use a linked stack. 
 
 ---
 
