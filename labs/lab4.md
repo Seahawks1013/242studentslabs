@@ -433,20 +433,20 @@ Record front-to-back contents and dequeue return values:
 | Operation | Queue contents (front → back) | Dequeue returned |
 |---|---|---|
 | Initial | *(empty)* | — |
-| enqueue(10) | | — |
-| enqueue(20) | | — |
-| enqueue(30) | | — |
-| dequeue | | |
-| enqueue(40) | | — |
-| dequeue | | |
-| dequeue | | |
-| enqueue(50) | | — |
-| enqueue(60) | | — |
-| enqueue(70) | | — |
-| dequeue | | |
-| dequeue | | |
-| dequeue | | |
-| dequeue | | |
+| enqueue(10) | 10 | — |
+| enqueue(20) | 10 20 | — |
+| enqueue(30) | 10 20 30 | — |
+| dequeue | 20 30 | 10 |
+| enqueue(40) | 20 30 40 | — |
+| dequeue | 30 40 | 20 |
+| dequeue | 40 | 30 |
+| enqueue(50) | 40 50 | — |
+| enqueue(60) | 40 50 60 | — |
+| enqueue(70) | 40 50 60 70 | — |
+| dequeue | 50 60 70 | 40 |
+| dequeue | 60 70 | 50 |
+| dequeue | 70 | 60 |
+| dequeue | (empty)| 70 |
 
 ### Observation Table 3b — Circular Array Internal State
 
@@ -455,20 +455,20 @@ Record the `front` index, `back` index, and `cnt` printed for the array queue af
 | Operation | `front` index | `back` index | `cnt` |
 |---|---|---|---|
 | Initial | 0 | 0 | 0 |
-| enqueue(10) | | | |
-| enqueue(20) | | | |
-| enqueue(30) | | | |
-| dequeue | | | |
-| enqueue(40) | | | |
-| dequeue | | | |
-| dequeue | | | |
-| enqueue(50) | | | |
-| enqueue(60) | | | |
-| enqueue(70) | | | |
-| dequeue | | | |
-| dequeue | | | |
-| dequeue | | | |
-| dequeue | | | |
+| enqueue(10) | 0 | 1 | 1 |
+| enqueue(20) | 0 | 2 | 2 |
+| enqueue(30) | 0 | 3 | 3 |
+| dequeue | 1 | 3 | 2 |
+| enqueue(40) | 1 | 4 | 3 |
+| dequeue | 2 | 4 | 2 |
+| dequeue | 3 | 4 | 1 |
+| enqueue(50) | 3 | 5 | 2 |
+| enqueue(60) | 3 | 6 | 3 |
+| enqueue(70) | 3 | 7 | 4 |
+| dequeue | 4 | 7 | 3 |
+| dequeue | 5 | 7 | 2 |
+| dequeue | 6 | 7 | 1 |
+| dequeue | 7 | 7 | 0 |
 
 ---
 
@@ -476,15 +476,15 @@ Record the `front` index, `back` index, and `cnt` printed for the array queue af
 
 **Q9.** Look at Table 3a. After every operation, do the linked queue and array queue always contain the same elements in the same order? What does this confirm about the two implementations?
 
-> Your answer:
+> Your answer: Yes they do. The array queue printed identical front to back components. This confirms that the implementations are satisfying the FIFO portion in the Queue ADT. While representations are different, they still produce the same output. 
 
 **Q10.** Look at Table 3b. After the three initial enqueues and one dequeue, the `front` index is 1 (not 0). The element at array index 0 is logically gone — but the dequeue operation never moved any data. What did it do instead? What does this tell you about how "removal" works in a circular array queue?
 
-> Your answer:
+> Your answer: What happened is that no data was moved. Instead, the slot is still there, but the front slot now holds a pointer for the new head position. This tells us that a curcular array quieue functions in O(1). 
 
 **Q11.** The circular array queue has a `cnt` field tracking the number of elements. An alternative design uses only `front` and `back` indices and considers the queue empty when `front == back`. What ambiguity arises in that design? Why is the `cnt` field (or an `isFull` flag) needed?
 
-> Your answer:
+> Your answer: In a circular array, it will reset the 'back' field only if enough data has been pushed through to rest it. For example, in an array with 4 positions for data, the 'back' field will drop back down to 0. However, the issue is that the array is actually full. If front=0 and back=0, then the ambiguity exists where the queue could be empty or full. That is what the 'cnt' field solves. 
 
 ---
 
