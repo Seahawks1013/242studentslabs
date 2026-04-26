@@ -605,19 +605,19 @@ int main() {
 
 | n | Linked push+pop | Vector push+pop | Ratio |
 |---|---|---|---|
-| 100,000 | | | |
-| 500,000 | | | |
-| 1,000,000 | | | |
-| 5,000,000 | | | |
+| 100,000 | 5326 | 7075|  0.75x |
+| 500,000 | 25394 | 33640 |  0.75x |
+| 1,000,000 | 44556 | 65614 | 0.68 |
+| 5,000,000 | 259169 | 308320 | 0.84x |
 
 ### Observation Table 4b — Queue Performance (μs)
 
 | n | Linked enq+deq | Array enq+deq | Ratio |
 |---|---|---|---|
-| 100,000 | | | |
-| 500,000 | | | |
-| 1,000,000 | | | |
-| 5,000,000 | | | |
+| 100,000 | 3388 | 15742 | 0.22x |
+| 500,000 | 1719 | 22122 | 0.78x |
+| 1,000,000 | 34400 | 30569 | 1.13x |
+| 5,000,000 | 175507 | 102612 | 1.71x |
 
 ---
 
@@ -625,19 +625,19 @@ int main() {
 
 **Q12.** Both linked and array implementations are O(1) per operation, so doubling n should double total time for both. When n grows from 100,000 to 5,000,000 (50×), by approximately what factor does each implementation's time grow? Is this consistent with O(n) total work?
 
-> Your answer:
+> Your answer: For the linked stack, it grows by a factor of about 48x, whereas the vector grows by about a factor of 43x. Since the numbers grow linearly, it is operating in constant time push/pop, which lines up overall with O(n). 
 
 **Q13.** The array/vector implementation is faster than the linked implementation by a consistent ratio. Both do the same logical work. What accounts for the difference? Name at least one concrete reason.
 
-> Your answer:
+> Your answer: One of the reasons why the array/vector implementation is faster is due to no memory allocation. The linked stack calls 'new' for when a new node occurs. It also then deletes each pop. That is a slow process. 
 
 **Q14.** The vector stack calls `reserve(n)` before pushing. Remove the `reserve` call mentally and predict whether the timing would change significantly. What does `reserve` prevent, and what cost does it avoid?
 
-> Your answer:
+> Your answer: Without 'reserve', the timing would change significantly. Essentially, reserve tells the vector how much space it will need instead of copying new information over. Without reserve, the vector stops midway, allocates new memory, and copies that information. That cost is avoided, and time is saved in the process. 
 
 **Q15.** Based on your observations across all four models, state a concrete rule for when you would prefer a linked-list implementation of a stack or queue over an array-based one. Your rule should reference at least one specific situation where the linked implementation's properties are genuinely advantageous.
 
-> Your answer:
+> Your answer: I would use a linked list when I don't know the maximum number of elements ahead of time. A program that processes an unknown amount of user input would be risky on an array, because if the input exceeds the fixed capacity, then the program will crash. A linked-list stack is able to grow with no risk of overflow. This is safer and much more predictable. 
 
 ---
 
@@ -645,11 +645,18 @@ int main() {
 ## Extra Credit Questions
 
 
-**A1.** The call stack in your computer is literally a stack. Every function call pushes a frame; every return pops one. What happens when a recursive function has no base case? Connect what you observed about the array stack's overflow behavior to the term "stack overflow."
+**A1.** The call stack in your computer is literally a stack. Every function call pushes a frame; every return pops one. What happens when a recursive function has no base case? Connect what you observed about the array stack's overflow behavior to the term "stack overflow." 
+
+Without a base case, it will continue pushing frames forever. The call stack will eventually run out of space. The OS detects it and will throw an overflow error. 
 
 **A2.** The linked queue's `dequeue` function has a single special-case line: `if (!head) tail = nullptr`. This line is easy to forget. Given what you traced in Model 3, describe exactly what breaks in a subsequent `enqueue` if this line is missing.
 
+Let's say the head and tail are pointing to the same value. After a dequeue, the head will point to nullptr, whereas the tail will still point to that same node (deleted memory). This is an issue, as the program is writing in memory it doesn't have. This will result in corrupting the data or crashing the program entirely. 
+
+
 **A3.** `std::stack` and `std::queue` in C++ wrap `std::deque` internally rather than a raw array or linked list. Based on what you observed in Model 4, why might `std::deque` be a better default backing container than either of your two implementations?
+
+From model 4, we saw how linked lists are slow at a large n due to per-element memory allocation. However, with arrays, they are faster but at a fixed size. std::deque rather allocates memory in chunks instead of one node or in a giant block. It is cache-friendly with each block, grows freely without a fixed limit, and doesn't make a giant copy like a vector. 
 
 ---
 
