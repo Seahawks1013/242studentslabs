@@ -262,11 +262,11 @@ Record the final RESULT printed for each input string:
 
 | Input | Result | Reason (in your words) |
 |---|---|---|
-| `({[]})` | | |
-| `({[}])` | | |
-| `((())` | | |
-| `hello(world[!])` | | |
-| *(empty string)* | | |
+| `({[]})` | VALID | |
+| `({[}])` | INVALID | |
+| `((())` | INVALID | |
+| `hello(world[!])` | VALID | |
+| *(empty string)* | VALID | |
 
 ---
 
