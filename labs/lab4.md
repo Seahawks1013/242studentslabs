@@ -262,11 +262,11 @@ Record the final RESULT printed for each input string:
 
 | Input | Result | Reason (in your words) |
 |---|---|---|
-| `({[]})` | VALID | |
-| `({[}])` | INVALID | |
-| `((())` | INVALID | |
-| `hello(world[!])` | VALID | |
-| *(empty string)* | VALID | |
+| `({[]})` | VALID | Every opener is matched with perfect LIFO |
+| `({[}])` | INVALID | after '[', it is not met with the corresponding ']'. Additionally, at the ']' position, it should be a '}' instead. |
+| `((())` | INVALID | There are three opens, two closed, and one unclosed. '(' remains on the stack. |
+| `hello(world[!])` | VALID | all other characters (letters, symbols, non-bracket chars) are ignored. Openers and closers match. |
+| *(empty string)* | VALID | Since there are no characters, that means no openers and closers are present. The stack is empty. |
 
 ---
 
@@ -276,24 +276,24 @@ Record the final RESULT printed for each input string:
 
 | Char | Action | Stack after (top → bottom) |
 |---|---|---|
-| `(` | push | |
-| `{` | push | |
-| `[` | push | |
-| `]` | pop/match | |
-| `}` | pop/match | |
-| `)` | pop/match | |
+| `(` | push | ( |
+| `{` | push | {( |
+| `[` | push | [{( |
+| `]` | pop/match | {( |
+| `}` | pop/match | ( |
+| `)` | pop/match | (empty) |
 
 **Q6.** For input `({[}])` the program reports INVALID. At which character does it fail, and what exactly is wrong? Why is a queue not a useful data structure for bracket matching — what ordering property of the stack makes the matching work correctly?
 
-> Your answer:
+> Your answer: It fails due to the '}' character at step 4. Since it doesn't match as the corresponding bracket for '[', which immediately outputs invalid. I queue would not work because it is FIFO. In order to bracket match, the program must check the most recrntly opened bracket against the current closer. This is exactly what the LIFO stack does. 
 
 **Q7.** The input `hello(world[!])` contains letters, `!`, and brackets mixed together. The program still reports VALID. What does the program do with non-bracket characters? Why is it correct to ignore them?
 
-> Your answer:
+> Your answer: In this case, the program ignores characters taht are not closers. This includes letters, digits, and punctuation. Due to the else statements, those characters are invisible to the program. 
 
-**Q8.** The empty string input reports VALID. Is this the right answer? Justify why an empty string is considered balanced.
+**Q8.** The empty string input reports VALID. Is this the right answer? Justify why an empty string is considered balanced. 
 
-> Your answer:
+> Your answer: Since there are no characters, the loop is never initiated. By default, the final stack checks out at st.empty(), which is true. Therefore, the program returns 'VALID'. Additionally, an empty string has zero openers and closers, meaning it is balanced on both sides anyways. 
 
 ---
 
