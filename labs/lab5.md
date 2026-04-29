@@ -119,32 +119,32 @@ Fill in the slot each key maps to:
 
 | Key | Slot (0–10) |
 |---|---|
-| alice | |
-| bob | |
-| carol | |
-| dave | |
-| eve | |
-| frank | |
-| grace | |
-| heidi | |
-| ivan | |
-| judy | |
+| alice | 92903040 |
+| bob | 97717 |
+| carol | 94431409 |
+| dave | 3076076 |
+| eve | 100820 |
+| frank | 97692050 |
+| grace | 98615224 |
+| heidi | 99159185 |
+| ivan | 3244570 |
+| judy | 3273504 |
 
 ### Observation Table 1b — Slot Occupancy
 
 | Slot | Number of keys assigned |
 |---|---|
-| 0 | |
-| 1 | |
-| 2 | |
-| 3 | |
-| 4 | |
-| 5 | |
-| 6 | |
-| 7 | |
-| 8 | |
-| 9 | |
-| 10 | |
+| 0 | 0 |
+| 1 | 0 |
+| 2 | 0 |
+| 3 | 2 |
+| 4 | 3 |
+| 5 | 2 |
+| 6 | 1 |
+| 7 | 0 |
+| 8 | 0 |
+| 9 | 0 |
+| 10 | 2 |
 
 ---
 
