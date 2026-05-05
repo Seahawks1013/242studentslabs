@@ -152,19 +152,19 @@ Fill in the slot each key maps to:
 
 **Q1.** How many slots are empty after inserting 10 keys into an 11-slot table? How many collisions occurred? Does the distribution look roughly uniform, or are keys clumped heavily in a few slots?
 
-> Your answer:
+> Your answer: 6 of the slots are empty, and 4 slots experienced collisions (slots 3,4,5, and 10). Slots 0,1,2,7,8, and 9 are empty. I would say the distribution is more clustered, which may arty be due to the small table size. 
 
 **Q2.** The hash function multiplies by 31 before adding each character. What would happen if you simply summed the character values without multiplying? Give an example of two different strings that would collide under the summing approach but likely not under the polynomial approach.
 
-> Your answer:
+> Your answer: If this occurred, the hash would not be sensitive to the order of letters. For example, "abcd" and "dcba" would produce the same output, resulting in a collision. Under a polynomial approach, the order would give different values. 
 
 **Q3.** TABLE_SIZE is chosen to be prime (11). Suppose you changed it to 10 (not prime). Would you expect more or fewer collisions? What property of prime-sized tables makes them distribute keys more evenly?
 
-> Your answer:
+> Your answer: I would expect more collisions. Since a number like 10 shares factors of 2 and 5, it is likely that slots 0,2,4,5,6,8 and 10 will fill up and have more collisions. Compared to using a prime number, it would have fewer even keys shared across the slots. 
 
 **Q4.** The load factor after 10 insertions is approximately 0.91. This is high. What are the consequences of a high load factor for (a) a chaining table and (b) an open-addressing table?
 
-> Your answer:
+> Your answer: For a chaining table, most lookups will require only 1 comparison. Performance will degrade as well; functional but operational. (b) With open addressing, there are almost no empty slots left. As  λ approaches 1, the table becomes unusable. This linear probing formula gives an average of 5.5 probes per lookup. Meaning most of the table has to be scanned to find a free slot. 
 
 ---
 
