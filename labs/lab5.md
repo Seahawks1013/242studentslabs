@@ -305,19 +305,19 @@ For each insertion, record which slot the key lands in and whether a collision o
 
 **Q5.** When two keys land in the same slot, the new key is **prepended** to the chain (inserted at the front), not appended to the back. Does this affect correctness? Does it affect performance? Would you ever prefer to append instead?
 
-> Your answer:
+> Your answer: Prepending is the correct approach. The search walks the entire chain regardless of order, so the result is the same. Performance-wise, prepending is O(1) since you have a pointer to the head, and its the best option. You would only append if you want a FIFO order, which would most commonly be used for application-specific reasons. 
 
 **Q6.** The `search("zara")` call walks an entire chain and finds nothing. How many nodes did it examine? In terms of load factor λ, what is the expected number of probes for an unsuccessful search in a chaining table?
 
-> Your answer:
+> Your answer: `search("zara")` was hashed to slot 0. It examined 0 nodes and returned immediately. Typically, you walk the entire chain at the target slot. The expected unsuccessful probe count is λ (about 1.14 here, since λ = 8/7 ≈ 1.14).
 
 **Q7.** After all 8 insertions into a 7-slot table the load factor exceeds 1.0. Chaining still works. Open addressing would not — why not? What invariant does open addressing require that chaining does not?
 
-> Your answer:
+> Your answer: Open addressing would not function properly because it would loop forever. Open addressing uses an empty sentinel to stop probe sequences. Chaining stores overflow in heap-allocated linked list notes that are attached to each bucket, meaning the array is never full. 
 
 **Q8.** Look at the final table printout. Some slots have chains of length 2 or more; others are empty. Even with a good hash function, perfect uniformity is not guaranteed. What is the theoretical expected maximum chain length for n keys in a table of size n, under uniform hashing?
 
-> Your answer:
+> Your answer: Under uniform hashing with n keys, the theoretical expected maximum chain length is Θ(log n / log log n). For an array with 7 nodes, the longest chains will typically be 2-3 nodes, which lines up with the output. 
 
 ---
 
@@ -497,15 +497,15 @@ After `bob` is deleted (tombstone), record the slots visited for each search:
 
 **Q9.** Look at the extra-probe column in Table 3a. Several keys required probing past their home slot. This is **primary clustering** — runs of occupied slots that grow longer over time. Describe in your own words why a new key hashing *anywhere into* an existing cluster makes the cluster grow longer.
 
-> Your answer:
+> Your answer: When a cluster exists, any new keys must probe forward until it finds the empty slot. Every time this occurs, it extends the cluster by one. Clusters attract more collisions, which makes them longer. 
 
 **Q10.** After `bob` is deleted, the search for `carol` must cross the tombstone. What would happen if the tombstone were replaced with an EMPTY marker instead — would the search for `carol` succeed or fail? Explain why.
 
-> Your answer:
+> Your answer: If this occurred, the search for 'grace' would start at the home slot 4, see empty, and return not found, even if grace is at slot 8. The EMPTY sentinel terminates the probe early, which cuts access to anything beyond. carol sites at its own home slot 6, and wouldn't be affected by the tombstone at slot 4. 
 
-**Q11.** Tombstones accumulate over time. A slot marked DELETED counts as "occupied" for searches (you must keep probing past it) but as "available" for insertions (you can place a new key there). What happens to average probe length as the fraction of tombstone slots grows? How does rehashing fix this?
+**Q11.** Tombstones accumulate over time. A slot marked DELETED counts as "occupied" for searches (you must keep probing past it) but as "available" for insertions (you can place a new key there). What happens to the average probe length as the fraction of tombstone slots grows? How does rehashing fix this?
 
-> Your answer:
+> Your answer:  As the tombstone slots accumulate, the average probe length increases since every search must step over each DELETED slot if encounters. 
 
 **Q12.** Linear probing requires λ < 1 (the table can never be completely full). Chaining from Model 2 allowed λ > 1. Why does open addressing impose this strict limit, while chaining does not?
 
