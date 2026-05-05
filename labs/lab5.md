@@ -505,11 +505,11 @@ After `bob` is deleted (tombstone), record the slots visited for each search:
 
 **Q11.** Tombstones accumulate over time. A slot marked DELETED counts as "occupied" for searches (you must keep probing past it) but as "available" for insertions (you can place a new key there). What happens to the average probe length as the fraction of tombstone slots grows? How does rehashing fix this?
 
-> Your answer:  As the tombstone slots accumulate, the average probe length increases since every search must step over each DELETED slot if encounters. 
+> Your answer:  As the tombstone slots accumulate, the average probe length increases since every search must step over each DELETED slot if it encounters. The tombstone allows for the search to continue instead of stopping when a gap is present. Worst-case scenario, tombstones may look like a full table to a search algorithm. This is fixed by rehashing, where the table is built from scratch. All the occupied entries are reinserted into a fresh array, so the new table has no DELETED slots and keys settle close to their home slots. 
 
 **Q12.** Linear probing requires λ < 1 (the table can never be completely full). Chaining from Model 2 allowed λ > 1. Why does open addressing impose this strict limit, while chaining does not?
 
-> Your answer:
+> Your answer: Open addressing imposes this strict limit since it keeps all the data inside the fixed-size array. When λ=1, every slot is occupied, and a probe for any missing key wraps around the entire table without finding EMPTY. This results in an infinite loop. However, chaining attaches a linked list to each array bucket. Overflow begins on the heap, not within the array. 
 
 ---
 
@@ -686,17 +686,17 @@ int main() {
 
 ### Critical Thinking Questions — Model 4
 
-**Q13.** At λ = 0.50 (half full), linear probing already takes noticeably more probes than double hashing. At λ ≈ 0.89 the gap widens dramatically. In your own words, explain *why* double hashing avoids the primary clustering that hurts linear probing.
+**Q13.** At λ = 0.50 (half full), linear probing already takes noticeably more probes than double hashing. At λ ≈ 0.89, the gap widens dramatically. In your own words, explain *why* double hashing avoids the primary clustering that hurts linear probing.
 
-> Your answer:
+> Your answer: Double hashing avoids primary clustering by computing a unique step size per key from a second, separate hash function. Compared to linear probing, each key is added to the cluster pile, which increases in size, and will result in a collision. Instead of stacking up like linear probing, the double hash calculates that second step much easier(key-wise, it requires more calculations), which results in more uniform scattering as the table fills up. 
 
 **Q14.** Chaining's probe count grows slowly and almost linearly with λ — and it still works above λ = 1.0. Open-addressing schemes blow up as λ → 1. From the table, at what load factor does linear probing exceed 3 probes on average? What does that tell you about a safe upper bound for λ in a linearly-probed table?
 
-> Your answer:
+> Your answer: From Table 4a, the linear probing exceeds 3 probes at λ = 0.50. This reveals that when the table is half full, it costs 3 times as many probes as an empty one. a The safe practical bound is λ < 0.5, which is why most standard libraries will double the array at this point (resizing). 
 
 **Q15.** Both theoretical formulas (linear and double hashing) are derived assuming **uniform random hashing** — every key equally likely in any slot. Your measured values are based on a specific deterministic hash function on synthetic keys. Are the measured values close to the theoretical predictions? What might cause discrepancies?
 
-> Your answer:
+> Your answer: The measured values are in the right ballpark. But they are worse than what theory predicts (this is a typical occurrence). This theory assumes that the hash functions are random, but this isn't the case in the real world. The hash values are concentrated in specific slots more than random ones would. Additionally, the synthetic key set is small and structured, which amplifies the hash bias.  
 
 ---
 
