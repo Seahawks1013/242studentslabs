@@ -471,13 +471,13 @@ Record where each key ended up (its final slot index) and how many extra probes 
 
 | Key | Home slot (`hash % 11`) | Final slot | Extra probes | Caused by cluster? |
 |---|---|---|---|---|
-| alice | | | | |
-| bob | | | | |
-| carol | | | | |
-| dave | | | | |
-| eve | | | | |
-| frank | | | | |
-| grace | | | | |
+| alice | 10 | 10 | 0 | No |
+| bob | 4 | 4 | 0 | No |
+| carol | 6 | 6 | 0 | No |
+| dave | 3 | 3 | 0 | No|
+| eve | 5 | 5 | 0 | No |
+| frank | 5 | 7 | 2 | Yes |
+| grace | 4 | 8 | 4 | Yes |
 
 ### Observation Table 3b — Search Probe Paths After Tombstone Insertion
 
@@ -485,11 +485,11 @@ After `bob` is deleted (tombstone), record the slots visited for each search:
 
 | Key searched | Slots visited (in order) | Probes | Result |
 |---|---|---|---|
-| carol (before delete) | | | |
-| carol (after delete) | | | |
-| alice | | | |
-| grace | | | |
-| zara | | | |
+| carol (before delete) | [6]="carol" | 1 | Found |
+| carol (after delete) | [6]="carol" | 1 | Found |
+| alice | [10]="alice" | 1 | Found |
+| grace | [4]=TOMB → [5]="eve" → [6]="carol" → [7]="frank" → [8]="grace" | 5 | Found |
+| zara | [7]="frank" → [8]="grace" → [9]=EMPTY | 2 | Not Found |
 
 ---
 
