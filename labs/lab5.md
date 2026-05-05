@@ -281,23 +281,23 @@ For each insertion, record which slot the key lands in and whether a collision o
 
 | Key inserted | Slot | Collision? (Y/N) | Chain length after insertion |
 |---|---|---|---|
-| alice | | | |
-| bob | | | |
-| carol | | | |
-| dave | | | |
-| eve | | | |
-| frank | | | |
-| grace | | | |
-| heidi | | | |
+| alice | 6 | N | 1 |
+| bob | 4 | N | 1 |
+| carol | 2 | N | 1 |
+| dave | 3 | N | 1 |
+| eve | 6 | Y | 2 |
+| frank | 1 | N | 1 |
+| grace | 1 | Y | 2 |
+| heidi | 6 | Y | 3 |
 
 ### Observation Table 2b — Lookup Probe Counts
 
 | Key searched | Slot | Probes needed | Found? |
 |---|---|---|---|
-| alice | | | |
-| carol | | | |
-| grace | | | |
-| zara | | | |
+| alice | 6 | 3 | Yes |
+| carol | 2 | 1 | Yes |
+| grace | 1 | 1 | Yes |
+| zara | 0 | 0 | No |
 
 ---
 
