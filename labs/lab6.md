@@ -292,19 +292,19 @@ int main() {
 
 | n | Array heap (bytes) | Linked heap (bytes) | Ratio (linked / array) |
 |---|---|---|---|
-| 1,000 | | | |
-| 10,000 | | | |
-| 100,000 | | | |
-| 500,000 | | | |
+| 1,000 | 4096 | 32000| 7.8x |
+| 10,000 | 65536 | 320000 | 4.9x |
+| 100,000 | 524288 | 3200000 | 6.1x |
+| 500,000 | 2097152 | 16000000 | 7.6x |
 
 ### Observation Table 2b — Insertion Time
 
 | n | Array heap (ms) | Linked heap (ms) |
 |---|---|---|
-| 1,000 | | |
-| 10,000 | | |
-| 100,000 | | |
-| 500,000 | | |
+| 1,000 | 4.235 | 0.332 |
+| 10,000 | 1.138 | 3.814 |
+| 100,000 | 11.204 | 43.144 |
+| 500,000 | 56.326 | 275.734 |
 
 ---
 
@@ -312,15 +312,15 @@ int main() {
 
 **Q5.** The program prints `sizeof(int)` and `sizeof(Node)` at startup. Using those two numbers, compute the *theoretical* ratio of linked-to-array memory and compare it to the ratios you measured in Table 2a. Does the ratio stay constant as n grows? What explains any discrepancy at small n?
 
-> Your answer:
+> Your answer: The theoretical ratio is sizeof(Node) / sizeof(int) which is 32 / 4 = 8×, so the linked heap should use 8 times more memory than the array heap. This makes sense because each linked node has to store an int plus 3 pointers, while the array heap just stores the raw ints. The measured ratios were close to 8× at large n but dropped as low as 4.9× at n=10,000. This is because the array heap uses a vector, which doubles its capacity whenever it fills up, so it sometimes has way more allocated memory than it actually needs. At larger n, the extra wasted space becomes proportionally smaller so the ratio creeps back toward 8×.
 
 **Q6.** The linked heap's `nodeAt(idx)` navigates from the root to the target node by following pointers level by level. The array heap computes the parent in one step with `i / 2`. Both are O(log n) in theory, but with very different constants. Explain in terms of CPU cache behavior why pointer chasing is slower than index arithmetic, referencing what you observed about linked lists vs. arrays in Lab 4.
 
-> Your answer:
+> Your answer: The array heap is storing all elements in memory at the same time, so when the CPU loads one element, it pulls nearby elements into cache at the same time. This means parent and child nodes are likely already cached when needed. Each node is allocated with new by the linked heap, which scatters them all over memory. Following a pointer to the next node usually (not always) causes a cache miss, which forces the CPU to fetch from RAM which is much slower. 
 
 **Q7.** Given what Tables 2a and 2b show, propose at least one realistic scenario where you would choose the linked-node heap over the array heap despite its overhead.
 
-> Your answer:
+> Your answer: Even though the linked heap uses way more memory and it is consistently slower, it would still be my choice when needing to merge two heaps efficiently. An array heap will require you to rebuild it from scratch, which is slow. But with a linked heap, you can redirect a few poitners and they're combined much faster. A real example would be combining two priority queues from different servers onto one. This is quick with a linked heap, compared to an array heap, which would take some time. 
 
 ---
 
