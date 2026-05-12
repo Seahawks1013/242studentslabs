@@ -148,11 +148,12 @@ Run the program and fill in the array contents (h[1] through h[8]) after each in
 
 **Q1.** What value always sits at `h[1]` after every insertion, regardless of the order keys arrive? Why does the heap property guarantee this?
 
-> Your answer: The maximum value in the heap will always be at h[1] after each insertion. If a different key arrives, then the array is rearranged so the largest value is at h[1]. The max-heap property states that each node's key should be greater than each of the childrens key, which is why h[1] will always hold the maximum. 
+> Your answer: The maximum value in the heap will always be at h[1] after each insertion. If a different key arrives, then the array is rearranged so the largest value is at h[1]. The max-heap property states that each node's key should be greater than each of the childrens key, which is why h[1] will always hold the maximum. Because every parent must be bigger than its children all the way down, whoever sits at the top must be bigger than everyone. 
 
 **Q2.** When 20 is inserted, it sifts all the way to the root. Trace the swaps by hand using the formula `parent = i / 2` starting from the index where 20 lands. Do the printed swaps match your calculation?
 
-> Your answer: Yes, the printed swaps match my calculation. For step one i=5, parents =5/2; it will be compared against index 2 (7). Since 20 is bigger than 7, they switch indexes. Index 2 is then compared to index 1, where 20 is bigger than the value 15. 
+> Your answer: Yes, the printed swaps match my calculation. For step one i=5, parents =5/2; it will be compared against index 2 (7). Since 20 is bigger than 7, they switch indexes. Index 2 is then compared to index 1, where 20 is bigger than the value 15. | Math: i=5, parent = 5/2 = 2, h[2]=7, 20>7 so swap
+i=2, parent = 2/2 = 1, h[1]=15, 20>15 so swap
 
 **Q3.** `extractMax` moves the *last* element in the array to the root before sifting down. Why the last element specifically? What structural property of a complete binary tree makes this the correct choice?
 
@@ -413,7 +414,7 @@ Record the value moved into the sorted region and the remaining unsorted size af
 
 **Q8.** The heapify phase starts at index `n/2 - 1` and works *downward* to 0. Why not start at `n - 1`? What kind of nodes occupy indices `n/2` through `n - 1`, and why do they need no sifting?
 
-> Your answer: Heapify starts at n/2-1 instead of n-1, since everything from index n/2 to n-1 are all leaf nodes. A leaf has no children, so it can't violate the heap rule. There is nothing below it to be out of order. The last node that has a child is always at index n/2-1, which is where we start and work backwards to 0. 
+> Your answer: Heapify starts at n/2-1 instead of n-1, since everything from index n/2 to n-1 are all leaf nodes. A leaf has no children, so it can't violate the heap rule. There is nothing below it to be out of order. The last node that has a child is always at index n/2-1, which is where we start and work backwards to 0. A leaf has no children so it can't violate teh heap rule, so theres nothing b elow it to be out of order. 
 
 **Q9.** After Phase 1, the maximum is at index 0. Phase 2 swaps it to the last position, temporarily placing a small value at the root and breaking the heap property. Why is it still correct to call `siftDown(a, 0, end)` with the sorted tail excluded? What guarantee does sift-down restore?
 
@@ -548,7 +549,7 @@ int main() {
 
 **Q10.** Across all three input orders and all three values of n, which algorithm is consistently fastest? Which is consistently slowest? Does input order affect runtime meaningfully? Explain why or why not this would be the case, referencing heapsort's algorithm nature.
 
-> Your answer: std::sort was consistently the fastest across every input order and every value of n, while mergesort was consistently the slowest. Input order affected std::sort and mergesort noticeably but barely affected heapsort at all. This is because heapsort always does the same work. If the input is mixed up, it will go through the same steps each time. 
+> Your answer: std::sort was consistently the fastest across every input order and every value of n, while mergesort was consistently the slowest. Input order affected std::sort and mergesort noticeably but barely affected heapsort at all. This is because heapsort always does the same work. If the input is mixed up, it will go through the same steps each time. Heapify also destroys any existing in the array, which is why input order doens't matter for heapsort. 
 
 **Q11.** `std::sort` uses **introsort**: it starts with quicksort but falls back to heapsort when recursion depth exceeds 2·⌊log₂ n⌋, preventing O(n²) worst-case behavior. Based on Table 4a, does `std::sort` appear to behave more like heapsort or something significantly faster? What does that tell you about how often the heapsort fallback is actually triggered in practice?
 
