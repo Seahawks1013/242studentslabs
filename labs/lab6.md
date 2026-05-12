@@ -160,7 +160,7 @@ Run the program and fill in the array contents (h[1] through h[8]) after each in
 
 **Q4.** The heap has 8 nodes, so its height is ⌊log₂ 8⌋ = 3. From Table 1b, did any extraction require more than 3 sift-down swaps? Explain why this bound holds. The maximum number of swaps than can be make equals the height of the tree; 
 
-> Your answer: No, from table 1b, the maximum observed was 2 sift-down swaps (less than 3 swaps). 
+> Your answer: No, from table 1b, the maximum observed was 2 sift-down swaps (less than 3 swaps). This bound occurs because sift down only travels straight down from the root to a leaf, making at most one swap per level. 
 
 ---
 
