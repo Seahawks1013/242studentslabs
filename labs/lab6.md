@@ -514,32 +514,32 @@ int main() {
 
 | Input order | heapsort (ms) | mergesort (ms) | std::sort (ms) |
 |---|---|---|---|
-| random  | | | |
-| sorted  | | | |
-| reverse | | | |
+| random  | 8.94 | 15.63 | 6.13 |
+| sorted  | 8.14 | 10.50 | 3.78 |
+| reverse | 7.60 | 10.89 | 3.06 |
 
 **n = 100,000**
 
 | Input order | heapsort (ms) | mergesort (ms) | std::sort (ms) |
 |---|---|---|---|
-| random  | | | |
-| sorted  | | | |
-| reverse | | | |
+| random  | 114.73 | 217.86 | 94.57 |
+| sorted  | 126.41 | 140.40 | 36.84 |
+| reverse | 78.93 | 102.27 | 30.37 |
 
 **n = 500,000**
 
 | Input order | heapsort (ms) | mergesort (ms) | std::sort (ms) |
 |---|---|---|---|
-| random  | | | |
-| sorted  | | | |
-| reverse | | | |
+| random  | 467.40 | 572.82 | 243.55 |
+| sorted  | 323.75 | 350.70 | 139.02 |
+| reverse | 290.71 | 333.61 | 108.58 |
 
 ### Observation Table 4b — Auxiliary Memory at n = 500,000
 
 | Algorithm | Space complexity | Auxiliary bytes |
 |---|---|---|
-| heapsort  | O(1)     | |
-| mergesort | O(n)     | |
+| heapsort  | O(1)     | 4 bytes |
+| mergesort | O(n)     | 2000000 (1953 KB) |
 | std::sort | O(log n) | *(stack, not measured)* |
 
 ---
@@ -548,10 +548,10 @@ int main() {
 
 **Q10.** Across all three input orders and all three values of n, which algorithm is consistently fastest? Which is consistently slowest? Does input order affect runtime meaningfully? Explain why or why not this would be the case, referencing heapsort's algorithm nature.
 
-> Your answer:
+> Your answer: std::sort was consistently the fastest across every input order and every value of n, while mergesort was consistently the slowest. Input order affected std::sort and mergesort noticeably but barely affected heapsort at all. This is because heapsort always does the same work. If the input is mixed up, it will go through the same steps each time. 
 
 **Q11.** `std::sort` uses **introsort**: it starts with quicksort but falls back to heapsort when recursion depth exceeds 2·⌊log₂ n⌋, preventing O(n²) worst-case behavior. Based on Table 4a, does `std::sort` appear to behave more like heapsort or something significantly faster? What does that tell you about how often the heapsort fallback is actually triggered in practice?
 
-> Your answer:
+> Your answer: std::sort is much faster than heapsort, so it has clearly spent most of its time in the quicksort phase and not falling back to heapsort. This tells us the heapsort fallback is rarely triggered in practice. Quicksort with good pivot selection keeps recursion depth shallow enough so that it never hits the fallback limit on typical inputs. 
 
 ---
