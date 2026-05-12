@@ -387,10 +387,10 @@ int main() {
 | siftDown from index | Array contents after step |
 |---|---|
 | (initial) | 5, 3, 8, 1, 9, 2, 7, 4, 6 |
-| 3 | |
-| 2 | |
-| 1 | |
-| 0 | |
+| 3 | [5, 3, 8, 6, 9, 2, 7, 4, 1]|
+| 2 |  [5, 3, 8, 6, 9, 2, 7, 4, 1] |
+| 1 |  [5, 9, 8, 6, 3, 2, 7, 4, 1] |
+| 0 |  [9, 6, 8, 5, 3, 2, 7, 4, 1] |
 
 ### Observation Table 3b — Sort-Down Phase
 
@@ -398,14 +398,14 @@ Record the value moved into the sorted region and the remaining unsorted size af
 
 | Step | Value placed in sorted region | Unsorted size remaining |
 |---|---|---|
-| 1 | | |
-| 2 | | |
-| 3 | | |
-| 4 | | |
-| 5 | | |
-| 6 | | |
-| 7 | | |
-| 8 | | |
+| 1 | 9 | 8 |
+| 2 | 8 | 7 |
+| 3 | 7 | 6 |
+| 4 | 6 | 5 |
+| 5 | 5 | 4 |
+| 6 | 4 | 3 |
+| 7 | 3 | 2 |
+| 8 | 2 | 1 |
 
 ---
 
@@ -413,11 +413,11 @@ Record the value moved into the sorted region and the remaining unsorted size af
 
 **Q8.** The heapify phase starts at index `n/2 - 1` and works *downward* to 0. Why not start at `n - 1`? What kind of nodes occupy indices `n/2` through `n - 1`, and why do they need no sifting?
 
-> Your answer:
+> Your answer: Heapify starts at n/2-1 instead of n-1, since everything from index n/2 to n-1 are all leaf nodes. A leaf has no children, so it can't violate the heap rule. There is nothing below it to be out of order. The last node that has a child is always at index n/2-1, which is where we start and work backwards to 0. 
 
 **Q9.** After Phase 1, the maximum is at index 0. Phase 2 swaps it to the last position, temporarily placing a small value at the root and breaking the heap property. Why is it still correct to call `siftDown(a, 0, end)` with the sorted tail excluded? What guarantee does sift-down restore?
 
-> Your answer:
+> Your answer: When the max is swapped to the end, it is in its final sorted position and will never get touched again. The small value now at the root breaks the heap rule, so we call siftDown, but the 'end' is passed as the size limit so it only operate son teh unsorted region and leaves the sorted tail alone. The small value is then restored by the heap property over the unsorted part, which puts the next biggest value at the root. This continues until everything is sorted. 
 
 ---
 
