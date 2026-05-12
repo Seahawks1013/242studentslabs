@@ -125,22 +125,22 @@ Run the program and fill in the array contents (h[1] through h[8]) after each in
 
 | After inserting | h[1] | h[2] | h[3] | h[4] | h[5] | h[6] | h[7] | h[8] |
 |---|---|---|---|---|---|---|---|---|
-| 10 | | | | | | | | |
-| 4  | | | | | | | | |
-| 15 | | | | | | | | |
-| 7  | | | | | | | | |
-| 20 | | | | | | | | |
-| 3  | | | | | | | | |
-| 18 | | | | | | | | |
-| 9  | | | | | | | | |
+| 10 | 10 | - | - | - | - | - | - | - |
+| 4  | 10 | 4 | - | - | - | - | - | -|
+| 15 | 15 | 4 | 10 | - | - | - | - | - |
+| 7  | 15 | 7 | 10 | 4 | - | - | - | - |
+| 20 | 20 | 15 | 10 | 4 | 7 | - | - | - |
+| 3  | 20 | 15 | 10 | 4 | 7 | 3 | - | - |
+| 18 | 20 | 15 | 18 | 4 | 7 | 3 | 10 | -| 
+| 9  | 20 | 15 | 18 | 9 | 7 | 3 | 10 | 4 |
 
 ### Observation Table 1b — Extraction Sequence
 
 | Extraction # | Value returned | Number of sift-down swaps |
 |---|---|---|
-| 1st | | |
-| 2nd | | |
-| 3rd | | |
+| 1st | 20 | 2 |
+| 2nd | 18 | 2 |
+| 3rd | 15 | 1 |
 
 ---
 
@@ -148,19 +148,19 @@ Run the program and fill in the array contents (h[1] through h[8]) after each in
 
 **Q1.** What value always sits at `h[1]` after every insertion, regardless of the order keys arrive? Why does the heap property guarantee this?
 
-> Your answer:
+> Your answer: The maximum value in the heap will always be at h[1] after each insertion. If a different key arrives, then the array is rearranged so the largest value is at h[1]. The max-heap property states that each node's key should be greater than each of the childrens key, which is why h[1] will always hold the maximum. 
 
 **Q2.** When 20 is inserted, it sifts all the way to the root. Trace the swaps by hand using the formula `parent = i / 2` starting from the index where 20 lands. Do the printed swaps match your calculation?
 
-> Your answer:
+> Your answer: Yes, the printed swaps match my calculation. For step one i=5, parents =5/2; it will be compared against index 2 (7). Since 20 is bigger than 7, they switch indexes. Index 2 is then compared to index 1, where 20 is bigger than the value 15. 
 
 **Q3.** `extractMax` moves the *last* element in the array to the root before sifting down. Why the last element specifically? What structural property of a complete binary tree makes this the correct choice?
 
-> Your answer:
+> Your answer:  A heap must stay in a binary tree at all times( fills left to right, bottom to top). The only node that can be deleted without messing up the shape is the very last one in the array. Grabbing a value from the top of the array will result in sifting, and grabbing an element from the middle will result in a hole. 
 
-**Q4.** The heap has 8 nodes, so its height is ⌊log₂ 8⌋ = 3. From Table 1b, did any extraction require more than 3 sift-down swaps? Explain why this bound holds.
+**Q4.** The heap has 8 nodes, so its height is ⌊log₂ 8⌋ = 3. From Table 1b, did any extraction require more than 3 sift-down swaps? Explain why this bound holds. The maximum number of swaps than can be make equals the height of the tree; 
 
-> Your answer:
+> Your answer: No, from table 1b, the maximum observed was 2 sift-down swaps (less than 3 swaps). 
 
 ---
 
