@@ -521,15 +521,15 @@ solution = dfs_search(problem)
 
 **Q5:** Compare the maximum frontier size between DFS and BFS. Why does DFS use significantly less memory, and in what situations would this memory advantage be crucial for solving a problem?
 
-> Your answer:
+> Your answer: DFS uses less memory because it only stores one path at a time + the siblings it hasn't tried yet. BFS frontier at level 10 with factor 3 would hold 59049 states in memory, compared to DFS, which would hold 30 states in memory. The maximum frontier size for DFS is O(b x d), compared to BFS's O(b^d). This memory advantage is crucial when the solution is deep, when teh state space is enormous, or when running on limited hardware. However, DFS comes at a cost; it might find a long non-optimal solution ot go down the wrong path. 
 
 **Q6:** DFS found a solution, but was it the optimal (shortest) solution? Explain why DFS is not guaranteed to find the optimal solution even when one exists, and describe a scenario where DFS might find a very poor solution.
 
-> Your answer:
+> Your answer: DFS is not guaranteed to always find the optimal solution; compared to BFS, it just dives down whatever path it picks first, and then it goes as deep as it can go. So if it is at the end of a long path, DFS will return that path. A scenario where DFS is a terrible solution is a maze where the correct solution is 3 moves to the right. If DFS randomly goes left, it will continue down that path to end up on the left side, which happens after 500 moves. It found a 3-move solution in 500 moves, which would be extremely inefficient. 
 
 **Q7:** We implemented a depth limit to prevent DFS from exploring infinitely deep paths. What problems could arise without this limit, and how does this relate to the concept of completeness in search algorithms?
 
-> Your answer:
+> Your answer: If a depth limit were not implemented, the DFS would loop infinitely on a path. When in a state, it would continue infinitely without finding a solution. An algorithm is considered "complete" when it always finds a solution when one exists. DFS without a depth limit is not complete because it can get stuck infinitely, along with not finding a solution. With a depth limit, DFS is forced to back up a certain number of moves, preventing infinite looping. However, you may miss the solution if the limit is too small; understanding the trade-offs with depth limits is crucial. 
 
 ---
 
