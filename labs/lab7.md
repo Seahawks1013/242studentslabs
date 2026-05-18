@@ -419,11 +419,11 @@ solution = bfs_search(problem)
 
 **Q3:** BFS explores nodes level by level (all nodes at depth 1, then all at depth 2, etc.). How does this exploration strategy guarantee that BFS finds the optimal solution for problems where all actions have the same cost?
 
-> Your answer:
+> Your answer: BFS explores level by level. Therefore, when it finally reaches its goal, that means it has already gone through other levels to find the shortest path. Since all paths have been examined, that means it found the shortest path, since it went through all theh different levels. 
 
 **Q4:** Observe the frontier size as the search progresses. Why does the frontier grow so rapidly in BFS, and what does this tell you about the space complexity of this algorithm? How would this affect solving larger problems?
 
-> Your answer:
+> Your answer: The frontier growth is exponential. BFS doesn't throw anything away; it holds every state in memory at once. BFS is expensive in memory and is multiplied by the branching factor at every level. Therefore, this reflects the space complexity of O(b^d). It can make BFS impractical for hard puzzles. A simple puzzle is fine, but as the solution becomes deeper, the memory is more prone to running out before it has been solved. 
 
 ---
 
