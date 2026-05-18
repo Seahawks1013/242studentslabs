@@ -220,9 +220,9 @@ Using the printed output for the 6-vertex graph, fill in the neighbor list for e
 
 ### Critical Thinking Questions — Model 1
 
-**Q1.** At V = 100 with E = 150 (sparse), which representation is smaller? At V = 100 with E = 4590, which is smaller? Identify the crossover condition in terms of E and V.
+**Q1.** At V = 100 with E = 150 (sparse), which representation is smaller? At V = 100 with E = 4950, which is smaller? Identify the crossover condition in terms of E and V.
 
-> Your answer:
+> Your answer: When v = 100 with E = 150, the adjacency list is smaller (it is at 4800 bytes compared to 40000 bytes ). The matrix uses 8.3x more memory. At v = 100 with E = 4950, the matrix is actually smaller( adjacency is at 81600 bytes, compared to 40000 bytes with the matrix). The crossover point occurs when the number of edges approaches v^2/2. Each edge in the adjacency list costs about 16 bytes, compared to the matrix, which uses 4 x v^2 bytes (regardless of edge count). 
 
 ---
 
