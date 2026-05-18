@@ -191,30 +191,30 @@ Using the printed output for the 6-vertex graph, fill in the neighbor list for e
 
 | Vertex | Neighbors (v, weight) |
 |---|---|
-| 0 | |
-| 1 | |
-| 2 | |
-| 3 | |
-| 4 | |
-| 5 | |
+| 0 | (1,w=4) (2,w=2) |
+| 1 | (0,w=4) (2,w=5) (3,w=10) |
+| 2 | (0,w=2) (1,w=5) (4,w=3) |
+| 3 | (1,w=10) (5,w=7) |
+| 4 | (2,w=3) (5,w=1) |
+| 5 | (3,w=7) (4,w=1) |
 
 | Matrix position | Value | What it means |
 |---|---|---|
-| mat[0][1] | | |
-| mat[1][0] | | |
-| mat[0][3] | | |
-| mat[3][5] | | |
+| mat[0][1] | 4 | Edge from vertex 0 to vertex 1 has weight 4 |
+| mat[1][0] | 4 | edge from vertex 1 to vertex 0 has weight 4 (undirected) |
+| mat[0][3] | 0 | no edge exists between vertex 0 and 3. |
+| mat[3][5] | 7 | edge from 3 and 5 has weight 7. |
 
 ### Observation Table 1b — Memory Usage
 
 | V | E | List (bytes) | Matrix (bytes) | Ratio (matrix/list) |
 |---|---|---|---|---|
-| 10  | 12     | | | |
-| 10  | 45     | | | |
-| 100 | 150    | | | |
-| 100 | 4,950  | | | |
-| 500 | 600    | | | |
-| 500 | 124,750 | | | |
+| 10  | 12     | 432 | 400 | 0.9x |
+| 10  | 45     | 960 | 400 | 0.4x |
+| 100 | 150    | 4800 | 40000 | 8.3x |
+| 100 | 4,950  | 81600 | 40000 | 0.5x |
+| 500 | 600    | 21600 | 1000000 | 46.3x |
+| 500 | 124,750 | 2008000 | 1000000 | 0.5x |
 
 ---
 
