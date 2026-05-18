@@ -325,7 +325,7 @@ print("\nPath cost: Each move costs 1 (implicit in our formulation)")
 
 **Q2:** In the 8-puzzle, we represent states as tuples of 9 numbers. What is one advantage of this representation compared to using a 2D array or other data structures? Consider computational efficiency, memory allocation, mutability and ease of use.
 
-> Your answer:
+> Your answer: The first advantage is due to the speed of comparison. A 2D list must search row by row, whereas a tuple can be searched in one go. Another advantage of using a tuple is that the values cannot change; for example, using another data structure, such as a regular list, could modify parts of the code without you realizing it. Another reason is that the algorithm can track which states are already visited; in order to do this, the data structure must be immutable, which is a characteristic of a tuple. 
 
 ---
 
