@@ -650,15 +650,15 @@ solution, cost = ucs_search(problem)
 
 **Q8:** How does UCS decide which node to expand next, and why does this strategy guarantee finding the optimal solution? Compare this to how BFS makes its expansion decisions.
 
-> Your answer:
+> Your answer: UCS utilizes a priority queue. Every time UCS needs to pick the next state to explore, it grabs whatever has the lowest total cost. Because it never explores an expensive path, it will find the cheapest path. It is different than BFS because BFS picks by depth; whatever is discovered first is what gets explored first; this works when each path is the same cost. UCS differs because it doesn't care about depth at all; instead, it picks by total cost. 
 
 **Q9:** Observe the path found by UCS through the grid. Does it go directly toward the goal, or does it take a longer route? Explain why UCS chose this path in terms of path cost versus path length.
 
-> Your answer:
+> Your answer: UCS took a longer route. It completely avoided the expensive terrain in the middle. A more direct path would have been shorter in steps but would have crossed cells costing 5 each, making the total cost much higher than 8. UCS chose the logner path because it optimizes for total cost, not the total number of steps. 
 
 **Q10:** In what types of problems would UCS perform identically to BFS? When would UCS clearly outperform BFS in terms of solution quality? Give specific examples of problem domains.
 
-> Your answer:
+> Your answer: UCS performs identically to BFS when the costs are equal. Therefore, the cheapest-cost node and node are always the same, meaning both algorithms execute in the same order. An example would be a maze where every step costs 1, or an 8-puzzle where every tile slide count is the same. UCS clearly outperforms BFS when action costs vary. A navigation system like Google Maps holds different speed limits and distances. BFS would return the path with teh fewest road segments while UCS finds teh path with the lowest travel time. 
 
 ---
 
