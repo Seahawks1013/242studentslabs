@@ -895,37 +895,37 @@ int main() {
 
 | Algorithm | Time (ms) |
 |---|---|
-| BFS | |
-| DFS | |
-| Dijkstra | |
-| Bellman-Ford | |
-| Topo Sort | |
-| Prim MST | |
-| Floyd-Warshall | |
+| BFS | 0.148 |
+| DFS | 0.157 |
+| Dijkstra | 0.584 |
+| Bellman-Ford | 30.570 |
+| Topo Sort | 0.049 |
+| Prim MST | 0.749 |
+| Floyd-Warshall | 1822.340 |
 
 **Medium (E ≈ 10V)**
 
 | Algorithm | Time (ms) |
 |---|---|
-| BFS | |
-| DFS | |
-| Dijkstra | |
-| Bellman-Ford | |
-| Topo Sort | |
-| Prim MST | |
-| Floyd-Warshall | |
+| BFS | 0.263 |
+| DFS | 0.492 |
+| Dijkstra | 1.326 |
+| Bellman-Ford | 194.053 |
+| Topo Sort | 0.164 |
+| Prim MST | 2.134 |
+| Floyd-Warshall | 4869.287 |
 
 **Dense (E ≈ 100V)**
 
 | Algorithm | Time (ms) |
 |---|---|
-| BFS | |
-| DFS | |
-| Dijkstra | |
-| Bellman-Ford | |
-| Topo Sort | |
-| Prim MST | |
-| Floyd-Warshall | |
+| BFS | 1.774 |
+| DFS | 4.236 |
+| Dijkstra | 4.167 |
+| Bellman-Ford | 1708.233 |
+| Topo Sort | 0.980 |
+| Prim MST | 5.341 |
+| Floyd-Warshall | skipped - O(V^3)|
 
 ### Observation Table 6b — Complexity Reference
 
@@ -933,13 +933,13 @@ Fill in the table from the printed output.
 
 | Algorithm | Time complexity | Extra space | Graph type required | Handles negative edges? |
 |---|---|---|---|---|
-| BFS | | | | |
-| DFS | | | | |
-| Dijkstra | | | | |
-| Bellman-Ford | | | | |
-| Topo Sort | | | | |
-| Prim MST | | | | |
-| Floyd-Warshall | | | | |
+| BFS | O(V+E) | O(V) | unweighted | N/A |
+| DFS | O(V+E) | O(V) | any | N/A |
+| Dijkstra | O((V+E)logV) | O(V) | non-neg wts | No |
+| Bellman-Ford | O(VE) | O(V) | any weights | Yes |
+| Topo Sort | O(V+E) | O(V) | DAG only | N/A |
+| Prim MST | O((V+E)logV) | O(V) | undirected | No |
+| Floyd-Warshall | O(V^3) | O(V^2) | any weights | Yes |
 
 ---
 
