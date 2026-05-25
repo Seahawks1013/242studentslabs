@@ -314,7 +314,7 @@ What is the ratio of sorted height to shuffled height? What is log₂(15) rounde
 **[OBSERVE 2]**
 Copy the in-order output from the shuffled BST. What do you notice? Is this output affected by which insertion order was used?
 
-Answer: The order is 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15. I notice that it is in ascending order. This output is affected by in-order traversal, which visits left -> root -> right nodes. No matter how the tree was built, it will always return in ascending order. Output is not affected by the insertion order. 
+> Answer: The order is 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15. I notice that it is in ascending order. This output is affected by in-order traversal, which visits left -> root -> right nodes. No matter how the tree was built, it will always return in ascending order. Output is not affected by the insertion order. 
 
 
 ---
@@ -328,13 +328,13 @@ The dictionary contains: `apple`, `application`, `apply`, `apt`, `banana`, `band
 **[OBSERVE 3]**
 `"car"` is in the dictionary. `"carpet"` is also in the dictionary. Both queries give `hasPrefix=1`. But their `search` results differ. Explain exactly what the trie node reached after traversing `c → a → r` looks like — specifically, its `isEnd` flag and its child pointers.
 
-Answer: The trie node reached after traversing c → a → r has isEnd = true (since "car" was inserted already as a complete word). It has an index pointer at index p, leading towards "carpet". 
+> Answer: The trie node reached after traversing c → a → r has isEnd = true (since "car" was inserted already as a complete word). It has an index pointer at index p, leading towards "carpet". 
 
 
 **[OBSERVE 4]**
 `"ap"` is **not** a word in the dictionary, but `hasPrefix` returns 1. Draw the trie path for `a → p` and identify where the traversal stops. Why does `trie_hasPrefix` return true while `trie_search` returns false?
 
-Answer: `a → p` lands on a valid trie node, since the path exists. `trie_hasPrefix` is true because the traversal finishes without hitting a null pointer. Since that node's isEnd flag is false, 'ap' was never inserted as a complete word, therefore returning false. 
+> Answer: `a → p` lands on a valid trie node, since the path exists. `trie_hasPrefix` is true because the traversal finishes without hitting a null pointer. Since that node's isEnd flag is false, 'ap' was never inserted as a complete word, therefore returning false. 
 
 **[OBSERVE 5]**
 Look at the four words sharing the prefix `"app"`: `apple`, `application`, `apply`, `apt`. 
@@ -342,14 +342,14 @@ Look at the four words sharing the prefix `"app"`: `apple`, `application`, `appl
 - How many trie nodes do all four share before their paths diverge?
 - How many nodes would a string BST use to store the same four words?
 
-Answer: All four nodes share the 'ap' prefix, with three of them sharing the 'app' prefix. A string BST would store each word as its own, separate node. A string BST would use 4 full independent string nodes for the same four words. 
+> Answer: All four nodes share the 'ap' prefix, with three of them sharing the 'app' prefix. A string BST would store each word as its own, separate node. A string BST would use 4 full independent string nodes for the same four words. 
 
 **[OBSERVE 6]**
 A BST storing strings compares full strings at each node: O(L) per comparison, O(log n) comparisons → O(L log n) per lookup. A trie does O(L) total regardless of n.
 
 But there is a storage scenario where the BST uses *less* memory than the trie. Describe it precisely. (Hint: think about what the trie's sharing advantage requires.)
 
-Answer: The BST would utilize less memory when those words share few or no common prefixes. A trie allocates one node per character, which gives it an advantage coming from prefix sharing. Even if a word is unique, the trie will allocate a separate node for every single character. The BST would store each word as a single node containing the whole string. This would favor the BST when short words and highly distinct starting characters are used. 
+> Answer: The BST would utilize less memory when those words share few or no common prefixes. A trie allocates one node per character, which gives it an advantage coming from prefix sharing. Even if a word is unique, the trie will allocate a separate node for every single character. The BST would store each word as a single node containing the whole string. This would favor the BST when short words and highly distinct starting characters are used. 
 
 ---
 
@@ -370,7 +370,7 @@ Run the program and observe the Part C output. The starting tree is:
 **[OBSERVE 7]**
 After every removal, is the BST property preserved? How does the in-order output confirm this without drawing the tree?
 
-Answer: Yes, the BST property is preserved after each removal. The in-order output remains sorted each time. Since the output is continuously sorted, this confirms that the BST was maintained throughout the removals. 
+> Answer: Yes, the BST property is preserved after each removal. The in-order output remains sorted each time. Since the output is continuously sorted, this confirms that the BST was maintained throughout the removals. 
 
 **[OBSERVE 8]**
 `remove(30)` is a one-child case. After inserting `{50,30,70,20,40,60,80,35}` and removing 20, node 30 has only a right child (40), and 40 has a left child (35). 
@@ -380,18 +380,14 @@ Trace what `bst_remove` does step-by-step when called with key=30:
 2. What pointer is returned to replace node 30?
 3. What happens to node 35?
 
-Answer:
-
-1. The second case fires. Node 30 only has a right child (since node 20 was removed).
-2. The pointer is returned to node 40.
-3. Nothing happens to node 35. It stays as node 40s left child. 
+> Answer: 1. The second case fires. Node 30 only has a right child (since node 20 was removed). 2. The pointer is returned to node 40. 3. Nothing happens to node 35. It stays as node 40s left child. 
 
 **[OBSERVE 9]**
 `remove(50)` is a two-children case. The code finds the **in-order successor** — the minimum of the right subtree.
 
 After removing 20 and 30, what does the tree look like just before `remove(50)` is called? What is 50's in-order successor at that point?
 
-Answer: The tree has 50 at the root with the left subtree containing 40 -> 35 and right subtree 70 -> 60,80 (after removal of 20 and 30). Node 50 still has two children, so the code finds the in-order successor, which is the minimum node on the right subtree. Since the lowest node value on the right subtree is 60, it then takes node 50s spot. 
+> Answer: The tree has 50 at the root with the left subtree containing 40 -> 35 and right subtree 70 -> 60,80 (after removal of 20 and 30). Node 50 still has two children, so the code finds the in-order successor, which is the minimum node on the right subtree. Since the lowest node value on the right subtree is 60, it then takes node 50s spot. 
 
 
 **[OBSERVE 10]**
@@ -399,7 +395,7 @@ The code always uses the in-order **successor** (smallest in right subtree) for 
 
 Would choosing one over the other affect correctness? Would it affect the height or balance of the resulting tree over many insertions and deletions? Describe a sequence of operations where the choice would matter practically.
 
-answer: There isn't a definite 'correctness' in this example. However, it does affect balance over time. If the successor is always used, you would keep pulling values from the right subtree, resulting in the shrinking of the right side. An example would be inserting 100 values on the right side, and deleting the root using the successor strategy. Every deletion pulls from the right subtree, shrinking it faster than the left. When the tree becomes lopsided, performance will degrade. 
+> Answer: There isn't a definite 'correctness' in this example. However, it does affect balance over time. If the successor is always used, you would keep pulling values from the right subtree, resulting in the shrinking of the right side. An example would be inserting 100 values on the right side, and deleting the root using the successor strategy. Every deletion pulls from the right subtree, shrinking it faster than the left. When the tree becomes lopsided, performance will degrade. 
 
 ---
 
@@ -410,11 +406,11 @@ The program builds both structures from 50,000 distinct randomly generated words
 **[OBSERVE 11]**
 Compute the speedup ratios: how many times faster is the Trie for exact search?
 
-Answer: From the output - Trie: 303,062 μs, and BST: 783,885 μs. Speedup = 783,885/303,062 = ~2.6x faster. The trie is faster because it does O(L) per lookup, compared to the BST, which does O(L x logn)
+> Answer: From the output - Trie: 303,062 μs, and BST: 783,885 μs. Speedup = 783,885/303,062 = ~2.6x faster. The trie is faster because it does O(L) per lookup, compared to the BST, which does O(L x logn)
 
 **[OBSERVE 12]**
 The BST height is printed alongside log₂(50,000) ≈ 15. The actual BST height for random words should be around 35–40. Why is a randomly built BST not balanced, even with random data? What would need to be different about the insertion order to achieve height ≈ 15?
 
-Answer: Random words are not truly random alphabetically. Some letters in words occur more. An example would be the likelihood of having words starting with 'a' compared to 'x' - words starting with 'a' are much more likely to appear in this random generation. Therefore, certain subtrees grow more, which creates unequal leveling. The BST has no mechanism of self-correction. To achieve a height of 15, all 50,000 words would need to be alphabetically sorted, always insert the middle word first, and then do the middle of each half, and so on. 
+> Answer: Random words are not truly random alphabetically. Some letters in words occur more. An example would be the likelihood of having words starting with 'a' compared to 'x' - words starting with 'a' are much more likely to appear in this random generation. Therefore, certain subtrees grow more, which creates unequal leveling. The BST has no mechanism of self-correction. To achieve a height of 15, all 50,000 words would need to be alphabetically sorted, always insert the middle word first, and then do the middle of each half, and so on. 
 
 
