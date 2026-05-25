@@ -326,10 +326,15 @@ Run the program and observe the Part B output.
 The dictionary contains: `apple`, `application`, `apply`, `apt`, `banana`, `band`, `bandana`, `bat`, `cat`, `card`, `care`, `car`, `carpet`.
 
 **[OBSERVE 3]**
-`"car"` is in the dictionary. `"carpet"` is also in the dictionary. Both queries give `hasPrefix=1`. But their `search` results differ. Explain exactly what the trie node reached after traversing `c → a → r` looks like — specifically its `isEnd` flag and its child pointers.
+`"car"` is in the dictionary. `"carpet"` is also in the dictionary. Both queries give `hasPrefix=1`. But their `search` results differ. Explain exactly what the trie node reached after traversing `c → a → r` looks like — specifically, its `isEnd` flag and its child pointers.
+
+Answer: The trie node reached after traversing c → a → r has isEnd = true (since "car" was inserted already as a complete word). It has an index pointer at index p, leading towards "carpet". 
+
 
 **[OBSERVE 4]**
 `"ap"` is **not** a word in the dictionary, but `hasPrefix` returns 1. Draw the trie path for `a → p` and identify where the traversal stops. Why does `trie_hasPrefix` return true while `trie_search` returns false?
+
+Answer: `a → p` lands on a valid trie node, since the path exists. `trie_hasPrefix` is true because the traversal finishes without hitting a null pointer. 
 
 **[OBSERVE 5]**
 Look at the four words sharing the prefix `"app"`: `apple`, `application`, `apply`, `apt`. 
