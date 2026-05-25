@@ -334,7 +334,7 @@ Answer: The trie node reached after traversing c → a → r has isEnd = true (s
 **[OBSERVE 4]**
 `"ap"` is **not** a word in the dictionary, but `hasPrefix` returns 1. Draw the trie path for `a → p` and identify where the traversal stops. Why does `trie_hasPrefix` return true while `trie_search` returns false?
 
-Answer: `a → p` lands on a valid trie node, since the path exists. `trie_hasPrefix` is true because the traversal finishes without hitting a null pointer. 
+Answer: `a → p` lands on a valid trie node, since the path exists. `trie_hasPrefix` is true because the traversal finishes without hitting a null pointer. Since that node's isEnd flag is false, 'ap' was never inserted as a complete word, therefore returning false. 
 
 **[OBSERVE 5]**
 Look at the four words sharing the prefix `"app"`: `apple`, `application`, `apply`, `apt`. 
@@ -342,10 +342,14 @@ Look at the four words sharing the prefix `"app"`: `apple`, `application`, `appl
 - How many trie nodes do all four share before their paths diverge?
 - How many nodes would a string BST use to store the same four words?
 
+Answer: All four nodes share the 'ap' prefix, with three of them sharing the 'app' prefix. A string BST would store each word as its own, separate node. A string BST would use 4 full independent string nodes for the same four words. 
+
 **[OBSERVE 6]**
 A BST storing strings compares full strings at each node: O(L) per comparison, O(log n) comparisons → O(L log n) per lookup. A trie does O(L) total regardless of n.
 
 But there is a storage scenario where the BST uses *less* memory than the trie. Describe it precisely. (Hint: think about what the trie's sharing advantage requires.)
+
+Answer: The BST would utilize less memory when those words share few or no common prefixes. A trie allocates one node per character, which gives it an advantage coming from prefix sharing. Even if a word is unique, the trie will allocate a separate node for every single character. The BST would store each word as a single node containing the whole string. This would favor the BST when short words and highly distinct starting characters are used. 
 
 ---
 
@@ -366,6 +370,8 @@ Run the program and observe the Part C output. The starting tree is:
 **[OBSERVE 7]**
 After every removal, is the BST property preserved? How does the in-order output confirm this without drawing the tree?
 
+Answer: Yes, the BST property is preserved after each removal. The in-order output remains sorted each time. Since the output is continuously sorted, this confirms that the BST was maintained throughout the removals. 
+
 **[OBSERVE 8]**
 `remove(30)` is a one-child case. After inserting `{50,30,70,20,40,60,80,35}` and removing 20, node 30 has only a right child (40), and 40 has a left child (35). 
 
@@ -373,6 +379,12 @@ Trace what `bst_remove` does step-by-step when called with key=30:
 1. Which case fires?
 2. What pointer is returned to replace node 30?
 3. What happens to node 35?
+
+Answer:
+
+1. The second case fires. Node 30 only has a right child (since node 20 was removed).
+2. The pointer is returned to node 40.
+3. Nothing happens to node 35. It stays as node 40s left child. 
 
 **[OBSERVE 9]**
 `remove(50)` is a two-children case. The code finds the **in-order successor** — the minimum of the right subtree.
