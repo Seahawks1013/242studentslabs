@@ -391,10 +391,15 @@ Answer:
 
 After removing 20 and 30, what does the tree look like just before `remove(50)` is called? What is 50's in-order successor at that point?
 
+Answer: The tree has 50 at the root with the left subtree containing 40 -> 35 and right subtree 70 -> 60,80 (after removal of 20 and 30). Node 50 still has two children, so the code finds the in-order successor, which is the minimum node on the right subtree. Since the lowest node value on the right subtree is 60, it then takes node 50s spot. 
+
+
 **[OBSERVE 10]**
 The code always uses the in-order **successor** (smallest in right subtree) for Case 3. Using the in-order **predecessor** (largest in left subtree) would also produce a valid BST.
 
 Would choosing one over the other affect correctness? Would it affect the height or balance of the resulting tree over many insertions and deletions? Describe a sequence of operations where the choice would matter practically.
+
+answer: There isn't a definite 'correctness' in this example. However, it does affect balance over time. If the successor is always used, you would keep pulling values from the right subtree, resulting in the shrinking of the right side. An example would be inserting 100 values on the right side, and deleting the root using the successor strategy. Every deletion pulls from the right subtree, shrinking it faster than the left. When the tree becomes lopsided, performance will degrade. 
 
 ---
 
@@ -405,8 +410,11 @@ The program builds both structures from 50,000 distinct randomly generated words
 **[OBSERVE 11]**
 Compute the speedup ratios: how many times faster is the Trie for exact search?
 
+Answer: From the output - Trie: 303,062 μs, and BST: 783,885 μs. Speedup = 783,885/303,062 = ~2.6x faster. The trie is faster because it does O(L) per lookup, compared to the BST, which does O(L x logn)
+
 **[OBSERVE 12]**
 The BST height is printed alongside log₂(50,000) ≈ 15. The actual BST height for random words should be around 35–40. Why is a randomly built BST not balanced, even with random data? What would need to be different about the insertion order to achieve height ≈ 15?
 
+Answer: Random words are not truly random alphabetically. Some letters in words occur more. An example would be the likelihood of having words starting with 'a' compared to 'x' - words starting with 'a' are much more likely to appear in this random generation. Therefore, certain subtrees grow more, which creates unequal leveling. The BST has no mechanism of self-correction. To achieve a height of 15, all 50,000 words would need to be alphabetically sorted, always insert the middle word first, and then do the middle of each half, and so on. 
 
 
