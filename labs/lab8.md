@@ -308,8 +308,13 @@ Record both printed heights. The same 15 values are inserted in two different or
 
 What is the ratio of sorted height to shuffled height? What is log₂(15) rounded down?
 
+Answer: The sorted Insertion height is 14. The shuffled insertion height =3. The ratio would be 4.67 (14/3). Insertion creates an unbalanced tree, due to each number being bigger than the previous one, creating a long line on the right. Compared to the shuffled tree, where it starts at the middle and creates a balanced tree. 
+
+
 **[OBSERVE 2]**
 Copy the in-order output from the shuffled BST. What do you notice? Is this output affected by which insertion order was used?
+
+Answer: The order is 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15. I notice that it is in ascending order. This output is affected by in-order traversal, which visits left -> root -> right nodes. No matter how the tree was built, it will always return in ascending order. Output is not affected by the insertion order. 
 
 
 ---
