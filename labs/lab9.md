@@ -273,6 +273,8 @@ Run the program and observe the Part A output.
 **[OBSERVE 1]**
 Record the three printed values: BST height, AVL height, and ⌊log₂(7)⌋. What is the ratio of BST height to AVL height? What would the ratio be for 1,000 elements inserted in sorted order?
 
+>>Answer: BST Height: 6 | AVL height: 2 | ⌊log₂(7)⌋ = 2
+>> The ratio of BST height ot AVL height is a ratio of 3 (6/2)=3x. As the sorted values are inserted, the BST degenrates into a right-leaning chain. For 1,000 elements in sorted order, the BST Height would eequal 999. AVL height = ⌊log₂(1000)⌋ ≈ 9. Therefore, the ratio would be about 111x. 
 ---
 
 ## Part B — The Four Rotation Cases
@@ -282,6 +284,8 @@ Run the program and observe the Part B output.
 **[OBSERVE 2]**
 All four cases — LL, RR, LR, RL — produce `root=20, left=10, right=30`. Why does every three-node rotation case end up with the median value at the root?
 
+>> Answer: A rotation will always promote the medium value at the root. Therefore, since LL, RR, LRR, and RL are sequences where 20 is the median value, it will always find its way to the root after rotations. The algorithm doesn't know which value is the median. Rather, it just fixes the balance factor, and the math results in '20' becoming the root value each time. 
+
 ---
 
 ## Part C — Balance Factor Trace
@@ -290,6 +294,19 @@ Run the program and observe the Part C output.
 
 **[OBSERVE 3]**
 Copy the full output for Part C. For the first seven insertions (`50` through `80`), the root never changes and the root balance factor stays in {−1, 0}. Why? What property of the insertion sequence ensures no rotation is needed during these seven inserts?
+
+>>insert(50):  root=50  root_bf=0  height=0
+insert(30):  root=50  root_bf=-1  height=1
+insert(70):  root=50  root_bf=0  height=1
+insert(20):  root=50  root_bf=-1  height=2
+insert(40):  root=50  root_bf=-1  height=2
+insert(60):  root=50  root_bf=0  height=2
+insert(80):  root=50  root_bf=0  height=2
+insert(10):  root=50  root_bf=-1  height=3
+insert(5):  root=50  root_bf=-1  height=3
+
+>> No rotations fire off since the tree is in order. 50 is inserted as the root, then 30 (left child), followed by 70 as the right child. Then 20 (left-left) and 40 (left-right are inputted). On the right subtree, 60 and 80 are filled, which brings the bf of the tree to 0. Since bf is never higher than one in these instances, no rotations are triggered. 
+
 
 **[OBSERVE 4]**
 After inserting `10`, the root balance factor becomes −1 and height becomes 3. After inserting `5`, the root is still `50`, balance factor is still −1, and height is still 3.
@@ -304,6 +321,8 @@ cout << "  left-left child:    " << tr->left->left->val
 ```
 
 Record what you see. Which node had balance factor ±2 before `afix` corrected it?
+
+Answer>> When 5 is added, it travels to the bottom and becomes the left child of 10. When going up, node 20 is the first node to hit a balance factor of -2. THis triggers a right rotation at node 20, which puts 10 at the right, with 10 as the left child and 20 as the right child of 10. 
 
 ---
 
