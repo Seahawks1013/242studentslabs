@@ -284,7 +284,7 @@ Run the program and observe the Part B output.
 **[OBSERVE 2]**
 All four cases — LL, RR, LR, RL — produce `root=20, left=10, right=30`. Why does every three-node rotation case end up with the median value at the root?
 
->> Answer: A rotation will always promote the medium value at the root. Therefore, since LL, RR, LRR, and RL are sequences where 20 is the median value, it will always find its way to the root after rotations. The algorithm doesn't know which value is the median. Rather, it just fixes the balance factor, and the math results in '20' becoming the root value each time. 
+>> Answer: A rotation will always promote the median value at the root. Therefore, since LL, RR, LRR, and RL are sequences where 20 is the median value, it will always find its way to the root after rotations. The algorithm doesn't know which value is the median. Rather, it just fixes the balance factor, and the math results in '20' becoming the root value each time. 
 
 ---
 
@@ -322,7 +322,7 @@ cout << "  left-left child:    " << tr->left->left->val
 
 Record what you see. Which node had balance factor ±2 before `afix` corrected it?
 
-Answer>> When 5 is added, it travels to the bottom and becomes the left child of 10. When going up, node 20 is the first node to hit a balance factor of -2. This triggers a right rotation at node 20, which puts 10 at the right, with 10 as the left child and 20 as the right child of 10. 
+Answer>> When 5 is added, it travels to the bottom and becomes the left child of 10. When going up, node 20 is the first node to hit a balance factor of -2. This triggers a right rotation at node 20, which promotes 10, with 5 as the left child and 20 as the right child of 10. 
 
 ---
 
@@ -389,4 +389,4 @@ Suppose you are building a database index that:
 
 Which of the three structures from this lab would you choose, and why? Be specific about height, disk reads per operation, and the cost of the alternative.
 
->>In this scenario, I would choose the 2-3-4 tree. It wins because each node holds more keys, meaning the tree is shorter. This will allow for fewer disk reads, which is faster overall. It will also be able to handle range queries well since all leaves are on the same depth, which makes sequential reads across the tree predictable and efficient. 
+>>In this scenario, I would choose the 2-3-4 tree. It wins because each node holds more keys, meaning the tree is shorter. This will allow for fewer disk reads, which is faster overall. It will also be able to handle range queries well since all leaves are on the same depth, which makes sequential reads across the tree predictable and efficient. The 2-3-4 tree has a height of about 12 for 10 million keys. This means only 12 disk reads at 5ms each, which equals 60 ms per search. A search on an AVL would take 170ms, and the Red-Black would take 235 ms. 
