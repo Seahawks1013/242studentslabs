@@ -274,7 +274,7 @@ Run the program and observe the Part A output.
 Record the three printed values: BST height, AVL height, and ⌊log₂(7)⌋. What is the ratio of BST height to AVL height? What would the ratio be for 1,000 elements inserted in sorted order?
 
 >>Answer: BST Height: 6 | AVL height: 2 | ⌊log₂(7)⌋ = 2
->> The ratio of BST height ot AVL height is a ratio of 3 (6/2)=3x. As the sorted values are inserted, the BST degenrates into a right-leaning chain. For 1,000 elements in sorted order, the BST Height would eequal 999. AVL height = ⌊log₂(1000)⌋ ≈ 9. Therefore, the ratio would be about 111x. 
+>> The ratio of BST height ot AVL height is a ratio of 3 (6/2)=3x. As the sorted values are inserted, the BST degenerates into a right-leaning chain. For 1,000 elements in sorted order, the BST Height would equal 999. AVL height = ⌊log₂(1000)⌋ ≈ 9. Therefore, the ratio would be about 111x. 
 ---
 
 ## Part B — The Four Rotation Cases
@@ -322,7 +322,7 @@ cout << "  left-left child:    " << tr->left->left->val
 
 Record what you see. Which node had balance factor ±2 before `afix` corrected it?
 
-Answer>> When 5 is added, it travels to the bottom and becomes the left child of 10. When going up, node 20 is the first node to hit a balance factor of -2. THis triggers a right rotation at node 20, which puts 10 at the right, with 10 as the left child and 20 as the right child of 10. 
+Answer>> When 5 is added, it travels to the bottom and becomes the left child of 10. When going up, node 20 is the first node to hit a balance factor of -2. This triggers a right rotation at node 20, which puts 10 at the right, with 10 as the left child and 20 as the right child of 10. 
 
 ---
 
@@ -338,10 +338,17 @@ Trace what happens during the split:
 2. What two nodes remain as children?
 3. Where does `40` finally land?
 
+>>1. Value that moves up: The middle key, 20, becomes the new root
+>>2. [10] and [30]
+>>3. [40] is inserted to the right of 30. [30|40]
+
+
 **[OBSERVE 6]**
 The tree is built from a purely sorted sequence `10, 20, ..., 80` — exactly the input that destroys a plain BST. Yet the printed height after all 8 insertions is **1**.
 
 Why doesn't sorted input degenerate a 2-3-4 tree the way it degenerates a plain BST? What structural property prevents it?
+
+>>In a BST Tree, the values continue moving on the rightmost leaf. In a 2-3-4 tree, nodes hold up to 3 keys, and then split to push a key up rather than growing sideways. For example, in a 4-node tree, the middle key is ejected up to the parent. The only time when height increases is when the root itself splits. It holds the same data, but in completely different structures. Therefore, the printed height continues to be 1. 
 
 ---
 
@@ -354,15 +361,23 @@ The plain BST sorted insert takes roughly **1,000× longer** than the AVL insert
 
 What would explain the timing ratio being smaller than the height ratio? (Hint: think about what operations besides comparisons are happening, and how cache behavior changes with tree depth.)
 
+>>Math: Height ratio =19,999/14 = ~1,428x. You would think that the BST takes 1,428x times longer, but the timing ratio is only ~200x. For the AVL, only 14 nodes are visited. They are closer together, meaning the steps are executed quickly. With 19,999, the BST has to search through different slots and areas in memory. Therefore, the BST visits more nodes and looks at different areas in memory. It results in a slower search time, but the timing ratio is still smaller because both share fixed overhead costs, such as memoryy allocation. Since both trees waste time on operations that have nothing to do with height, the wasted time occurs for both, which makes the BST look faster than it is. 
+
 **[OBSERVE 8]**
 For **random** input, all three structures are within a small constant factor of each other in insert time, and the BST height (~32) is within 2× of the AVL height (~16).
 
 What does this tell you about when the plain BST is an acceptable choice? What kind of guarantee does it still fail to provide even for random input?
 
+>> A plan BST is the acceptable choice for randomized input. If the data is sorted, it will result in a lopsided tree that operates similarly to a linked list. However, it fails to provide a worst-case guarantee. If data happens to be sorted, it can destroy performance without warning. A nearly sorted sequence will silently degrade to O(n) per operation, compared to an AVL or Red-Black trees which guarantee O(log n). 
+
 **[OBSERVE 9]**
 The sorted-built search for `std::map` is slower than AVL in this run, even though both are O(log n) with similar heights. One reason: `std::map` uses a Red-Black tree, which is slightly less balanced than AVL (height ≤ 2 log n vs ≤ 1.44 log n).
 
 But there is another reason related to **memory layout**. A `std::map` node is heap-allocated separately and contains extra pointers (parent, color flag). An `ANode` in this lab also heap-allocates, but what does the `std::map` node contain that the lab's `ANode` does not, and how might that affect cache performance?
+
+>>Each std::map node is larger in memory due to containing a parent pointer and a color flag. This results in the CPU needing to make more trips to RAM to fetch the nodes that are not in cache (cache misses). Since ANode is smaller, more AVL nodes fit in the cache, meaning fewer trips are made to RAM. Over 400,000 lookups, those extra cache misses add up, resulting in std::map being slower than AVL, even though they are both O(log n). 
+
+
 
 **[OBSERVE 10]**
 You have now seen three balanced structures — AVL tree, Red-Black tree (`std::map`), and 2-3-4 tree — and timed two of them.
@@ -373,3 +388,5 @@ Suppose you are building a database index that:
 - Needs to support search and range queries
 
 Which of the three structures from this lab would you choose, and why? Be specific about height, disk reads per operation, and the cost of the alternative.
+
+>>In this scenario, I would choose the 2-3-4 tree. It wins because each node holds more keys, meaning the tree is shorter. This will allow for fewer disk reads, which is faster overall. It will also be able to handle range queries well since all leaves are on the same depth, which makes sequential reads across the tree predictable and efficient. 
